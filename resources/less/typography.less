@@ -1,0 +1,144 @@
+body {
+  line-height: 22px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: @font-family;
+  color: @color-font;
+}
+
+input{
+  transition: .5s;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1.3em;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// a[href$=".xls"], 
+// a[href$=".xlsx"],
+// a[href$=".pdf"],
+// a[href$=".doc"], 
+// a[href$=".docx"]{
+//   margin-left: 40px;
+//   position: relative;
+//   &::before{
+//     content: '';
+//     width: 26px;
+//     height: 26px;
+//     position: absolute;
+//     left: -40px;
+//     bottom: 0;
+//   }
+// }
+
+// a[href$=".xls"], a[href$=".xlsx"] {
+//   &::before {
+//     background: url(../images/xls-icon.png);
+//   }
+// }
+
+// a[href$=".pdf"] {
+//   &::before  {
+//     background: url(../images/pdf-icon.png);
+//   }
+// }
+
+// a[href$=".doc"], a[href$=".docx"] {
+//   &::before  {
+//     background: url(../images/doc-icon.png);
+//   }
+// }
+
+.h1 {
+  font-size: 2rem;
+}
+
+.h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.h3 {
+  font-size: 1.25rem;
+}
+
+.h4 {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.h5 {
+  font-size: 1.25rem;
+}
+
+*::selection {
+  background: fade(lighten(@color-main, 20%), 40%);
+}
+
+*:focus {
+  outline: none;
+}
+
+table{
+  width: 100%;
+  
+  caption{
+    text-transform: uppercase;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: left;
+    padding-top: 20px;
+  }
+
+  th{
+    // border-bottom: 1px solid @color-light-grey;
+    text-transform: uppercase;
+  }
+
+  tr{
+    height: 50px;
+  }
+
+  tbody{
+    tr:nth-of-type(even){
+      // background-color: @color-light-grey;
+    }
+    
+  }
+
+  td,th{
+    text-align: left;
+    padding-left: 20px;
+
+    // @media(max-width: 560px){
+    //   padding-left: 0;
+    // }
+  }
+
+  // @media(max-width: 560px){
+  //   overflow: scroll;
+  //   display: block;
+  // }
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: @color-font;
+  transition: .5s;
+  &:hover {
+    border-color: transparent;
+  }
+}
+
+form input{
+  font-family: @font-family;
+}
