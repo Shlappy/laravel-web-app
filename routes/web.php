@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return view('index');
+  return view('pages.index');
 });
 
-require __DIR__.'/auth.php';
+Route::get('/catalog', 'ProductController@show')->name('product.show');
+
+
+// Admin routes
+Route::prefix('admin')->group(function () {
+  Route::controller(CategoryController::class)->group(function () {
+    Route::get('/', 'show')->name('category.show');
+    Route::post('/', 'store')->name('category.create');
+  });
+
+  Route::post('/products/{product}', 'ProductController@create')->name('product.create');
+});
+
+require __DIR__ . '/auth.php';

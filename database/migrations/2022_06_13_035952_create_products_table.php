@@ -16,8 +16,15 @@ return new class extends Migration
     Schema::create('products', function (Blueprint $table) {
       $table->id();
       $table->string('name');
-      $table->boolean('popular');
-      // $table->string('image');
+      $table->integer('price')->unsigned()->nullable();
+      $table->integer('old_price')->unsigned()->nullable();
+      $table->unsignedMediumInteger('stock')->nullable();
+      $table->string('images')->nullable();
+      $table->boolean('is_popular');
+      $table->foreignId('category_id')
+        ->nullable()
+        ->nullOnDelete()
+        ->constrained();
       $table->timestamps();
     });
   }

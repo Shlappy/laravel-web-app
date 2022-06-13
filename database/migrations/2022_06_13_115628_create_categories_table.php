@@ -13,10 +13,10 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('images', function (Blueprint $table) {
+    Schema::create('categories', function (Blueprint $table) {
       $table->id();
-      $table->string('path');
-      $table->string('alt')->nullable();
+      $table->string('name');
+      $table->unsignedInteger('parent_id')->nullable();
     });
   }
 
@@ -27,6 +27,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('images');
+    Schema::dropIfExists('categories');
   }
 };
