@@ -1,6 +1,6 @@
 body {
   line-height: 22px;
-  font-size: 16px;
+  font-size: @font-size;
   font-weight: 400;
   font-family: @font-family;
   color: @color-font;
@@ -19,61 +19,8 @@ p {
   }
 }
 
-// a[href$=".xls"], 
-// a[href$=".xlsx"],
-// a[href$=".pdf"],
-// a[href$=".doc"], 
-// a[href$=".docx"]{
-//   margin-left: 40px;
-//   position: relative;
-//   &::before{
-//     content: '';
-//     width: 26px;
-//     height: 26px;
-//     position: absolute;
-//     left: -40px;
-//     bottom: 0;
-//   }
-// }
-
-// a[href$=".xls"], a[href$=".xlsx"] {
-//   &::before {
-//     background: url(../images/xls-icon.png);
-//   }
-// }
-
-// a[href$=".pdf"] {
-//   &::before  {
-//     background: url(../images/pdf-icon.png);
-//   }
-// }
-
-// a[href$=".doc"], a[href$=".docx"] {
-//   &::before  {
-//     background: url(../images/doc-icon.png);
-//   }
-// }
-
-.h1 {
-  font-size: 2rem;
-}
-
-.h2 {
-  font-size: 1.5rem;
-  font-weight: 400;
-}
-
-.h3 {
-  font-size: 1.25rem;
-}
-
-.h4 {
-  font-size: 1.125rem;
-  margin-bottom: 0.5rem;
-}
-
-.h5 {
-  font-size: 1.25rem;
+h1 {
+  margin: 0 0 0.67em 0;
 }
 
 *::selection {
@@ -104,26 +51,10 @@ table{
     height: 50px;
   }
 
-  tbody{
-    tr:nth-of-type(even){
-      // background-color: @color-light-grey;
-    }
-    
-  }
-
   td,th{
     text-align: left;
     padding-left: 20px;
-
-    // @media(max-width: 560px){
-    //   padding-left: 0;
-    // }
   }
-
-  // @media(max-width: 560px){
-  //   overflow: scroll;
-  //   display: block;
-  // }
 }
 
 li {
@@ -133,10 +64,8 @@ li {
 a {
   text-decoration: none;
   color: @color-font;
-  transition: .5s;
-  &:hover {
-    border-color: transparent;
-  }
+  transition: .2s;
+  color: inherit;
 }
 
 form input{

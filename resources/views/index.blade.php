@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel App</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-    <body class="antialiased">
-      test
-    </body>
-</html>
+<x-app-layout>
+  <main>
+    <x-banner class="banner banner__main">
+      <div class="inner">
+        <h1>Industrious</h1>
+        <p class="banner__text">A responsive business oriented template with a video background<br />
+          designed by <a href="#">TEMPLATED</a> and released under the Creative Commons License.</p>
+      </div>
+    </x-banner>
+  </main>
+</x-app-layout>
