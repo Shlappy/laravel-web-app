@@ -1,0 +1,4 @@
+<div>
+    {{ $price }}
+    {{ $oldPrice }}
+</div>

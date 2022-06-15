@@ -20,7 +20,6 @@ return new class extends Migration
       $table->integer('old_price')->unsigned()->nullable();
       $table->unsignedMediumInteger('stock')->nullable();
       $table->string('images')->nullable();
-      $table->boolean('is_popular');
       $table->foreignId('category_id')
         ->nullable()
         ->nullOnDelete()

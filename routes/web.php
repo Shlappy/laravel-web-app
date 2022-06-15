@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -19,17 +18,17 @@ Route::get('/', function () {
   return view('pages.index');
 });
 
-Route::get('/catalog', 'ProductController@show')->name('product.show');
+Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.show');
 
 
 // Admin routes
-Route::prefix('admin')->group(function () {
-  Route::controller(CategoryController::class)->group(function () {
-    Route::get('/', 'show')->name('category.show');
-    Route::post('/', 'store')->name('category.create');
-  });
+// Route::prefix('admin')->group(function () {
+//   Route::controller(CategoryController::class)->group(function () {
+//     Route::get('/', 'show')->name('category.show');
+//     Route::post('/', 'store')->name('category.create');
+//   });
 
-  Route::post('/products/{product}', 'ProductController@create')->name('product.create');
-});
+//   Route::post('/products/{product}', 'App\Http\Controllers\ProductController@create')->name('product.create');
+// });
 
 require __DIR__ . '/auth.php';
