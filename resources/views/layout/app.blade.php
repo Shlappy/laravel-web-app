@@ -9,6 +9,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/app.css">
+    <link href="http://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
   </head>
   <body>
     <x-layout.header></x-layout.header>

@@ -6,8 +6,8 @@ use Illuminate\View\Component;
 
 class ProductItem extends Component
 {
-  public int $price;
-  public int $oldPrice;
+  public string $price;
+  public string $oldPrice;
 
   /**
    * Create a new component instance.
@@ -16,11 +16,12 @@ class ProductItem extends Component
    */
   public function __construct(
     public string $name = '',
-    $price = 0,
-    $oldPrice = 0
+    public string $images = '',
+    $price = null,
+    $oldPrice = null
   ) {
-    $this->price = convert_price($price);
-    $this->oldPrice = convert_price($oldPrice);
+    $this->price = convert_format_price($price);
+    $this->oldPrice = convert_format_price($oldPrice);
   }
 
   /**
@@ -30,6 +31,6 @@ class ProductItem extends Component
    */
   public function render()
   {
-    return view('components.product-item');
+    return view('components.product.product-item');
   }
 }

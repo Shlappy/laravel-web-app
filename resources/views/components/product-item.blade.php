@@ -1,4 +1,0 @@
-<div>
-    {{ $price }}
-    {{ $oldPrice }}
-</div>

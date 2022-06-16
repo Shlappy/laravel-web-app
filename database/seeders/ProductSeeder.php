@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
     Schema::enableForeignKeyConstraints();
 
     Product::factory()
-      ->count(10)
+      ->count(130)
       ->create();
   }
 }

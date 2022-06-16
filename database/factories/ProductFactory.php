@@ -41,7 +41,7 @@ class ProductFactory extends Factory
   public function randomImages()
   {
     $images = [];
-    $count = rand(0, 2);
+    $count = rand(0, 0);
     for ($i = 0; $i <= $count; $i++) {
       $images[] = $this->faker->image(storage_path('app/public/images/products'), 200, 200, false);
     }

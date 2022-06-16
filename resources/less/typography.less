@@ -1,12 +1,27 @@
 body {
+  position: relative;
   line-height: 22px;
   font-size: @font-size;
   font-weight: 400;
-  font-family: @font-family;
+  font-family: 'Montserrat', sans-serif;
   color: @color-font;
+  background-color: @bg-color-light;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    opacity: 0.35;
+    background-image: url(/storage/images/dots.svg);
+    background-repeat: repeat;
+  }
 }
 
-input{
+input {
   transition: .5s;
 }
 
@@ -14,6 +29,7 @@ p {
   padding: 0;
   margin: 0;
   margin-bottom: 1.3em;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -31,10 +47,10 @@ h1 {
   outline: none;
 }
 
-table{
+table {
   width: 100%;
-  
-  caption{
+
+  caption {
     text-transform: uppercase;
     font-size: 20px;
     line-height: 24px;
@@ -42,16 +58,17 @@ table{
     padding-top: 20px;
   }
 
-  th{
+  th {
     // border-bottom: 1px solid @color-light-grey;
     text-transform: uppercase;
   }
 
-  tr{
+  tr {
     height: 50px;
   }
 
-  td,th{
+  td,
+  th {
     text-align: left;
     padding-left: 20px;
   }
@@ -68,6 +85,6 @@ a {
   color: inherit;
 }
 
-form input{
+form input {
   font-family: @font-family;
 }
