@@ -19,11 +19,13 @@ return new class extends Migration
       $table->integer('price')->unsigned()->nullable();
       $table->integer('old_price')->unsigned()->nullable();
       $table->unsignedMediumInteger('stock')->nullable();
+      $table->string('slug')->nullable()->unique();
+      $table->boolean('published')->default(true);
       $table->string('images')->nullable();
       $table->foreignId('category_id')
         ->nullable()
-        ->nullOnDelete()
-        ->constrained();
+        ->constrained()
+        ->nullOnDelete();
       $table->timestamps();
     });
   }

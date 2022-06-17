@@ -2,7 +2,7 @@
  <ul>
     <li>{{ $subcategory->name }}</li> 
     @if (count($subcategory->subcategory))
-      @include('product.subCategoryList', ['subcategories' => $subcategory->subcategory])
+      <x-product.subcategory-tree :subcategories="$subcategory->subcategory"></x-product.subcategory-tree>
     @endif
  </ul> 
 @endforeach

@@ -18,12 +18,20 @@ class ProductSeeder extends Seeder
    */
   public function run()
   {
-    Schema::disableForeignKeyConstraints();
-    DB::table('products')->truncate();
-    Schema::enableForeignKeyConstraints();
+    // Add category id
+    // $products = Product::all();
+    // foreach ($products as $product) {
+    //   $product->category_id = \App\Models\Category::inRandomOrder()->first()->id;
+    //   $product->save();
+    // }
 
-    Product::factory()
-      ->count(130)
-      ->create();
+    // Main
+    // Schema::disableForeignKeyConstraints();
+    // DB::table('products')->truncate();
+    // Schema::enableForeignKeyConstraints();
+
+    // Product::factory()
+    //   ->count(130)
+    //   ->create();
   }
 }

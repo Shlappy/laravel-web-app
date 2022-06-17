@@ -18,7 +18,9 @@ Route::get('/', function () {
   return view('pages.index');
 });
 
-Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.show');
+// Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.show');
+Route::get('/catalog', 'App\Http\Controllers\CategoryController@index')->name('catalog');
+Route::get('/{category}', 'App\Http\Controllers\CategoryController@show')->name('category');
 
 
 // Admin routes

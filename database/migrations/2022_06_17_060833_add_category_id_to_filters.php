@@ -13,12 +13,11 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('categories', function (Blueprint $table) {
-      $table->id();
-      $table->string('slug')->nullable()->unique();
-      $table->string('name');
-      $table->string('image')->nullable();
-      $table->unsignedInteger('parent_id')->nullable();
+    Schema::table('filters', function (Blueprint $table) {
+      $table->foreignId('category_id')
+        ->nullable()
+        ->constrained()
+        ->nullOnDelete();
     });
   }
 
@@ -29,6 +28,8 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('categories');
+    Schema::table('filters', function (Blueprint $table) {
+      $table->dropColumn('category_id');
+    });
   }
 };

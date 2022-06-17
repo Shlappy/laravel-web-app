@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Helper\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use app\Models\Category;
+use App\Models\Category;
+use App\Models\Filter;
 
 class Product extends Model
 {
@@ -21,8 +22,13 @@ class Product extends Model
     'category_id',
   ];
 
-  public function category()
+  // public function category()
+  // {
+  //   return $this->belongsTo(Category::class);
+  // }
+
+  public function filters()
   {
-    return $this->belongsTo(Category::class);
+    return $this->hasMany(Filter::class);
   }
 }

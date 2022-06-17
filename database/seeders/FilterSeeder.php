@@ -6,6 +6,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Filter;
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 class FilterSeeder extends Seeder
 {
   /**
@@ -15,8 +18,12 @@ class FilterSeeder extends Seeder
    */
   public function run()
   {
-    //   Filter::factory()
-    //     ->count(10)
-    //     ->create();
+    Schema::disableForeignKeyConstraints();
+    DB::table('filters')->truncate();
+    Schema::enableForeignKeyConstraints();
+
+    Filter::factory()
+      ->count(300)
+      ->create();
   }
 }

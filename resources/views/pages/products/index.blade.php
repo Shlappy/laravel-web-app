@@ -2,7 +2,9 @@
   <div class="container container--lg">
     <div class="product__blocks">
       
-      <div class="filter filter__products"></div>
+      <div class="filter filter__products">
+        
+      </div>
 
       <div 
         class="product__catalog-wrapper" 
@@ -17,7 +19,6 @@
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.store('products', {
-        // list: {},
         html: '',
  
         async get(url = window.location.href) {

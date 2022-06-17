@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \app\Models\Category;
+use App\Models\Category;
 class CategoryController extends Controller
 {
-  public function adminIndex()
-  {
-    $parentCategories = Category::where('parent_id', 0)->get();
-
-    return view('admin.product.categoryTreeView', compact('parentCategories'));
-  }
-
-  // public function index()
+  // public function adminIndex()
   // {
   //   $parentCategories = Category::where('parent_id', 0)->get();
 
   //   return view('admin.product.categoryTreeView', compact('parentCategories'));
   // }
+
+  public function index()
+  {
+    return view('pages.categories.index');
+  }
+
+  public function show(Request $request, Category $category)
+  {
+    dd($request->title);
+    return view('pages.categories.index');
+  }
 }
