@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Products;
 
 use Illuminate\View\Component;
 
@@ -16,7 +16,7 @@ class ProductItem extends Component
    */
   public function __construct(
     public string $name = '',
-    public string $images = '',
+    public ?string $images = '',
     $price = null,
     $oldPrice = null
   ) {

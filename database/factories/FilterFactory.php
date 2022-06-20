@@ -79,15 +79,18 @@ class FilterFactory extends Factory
       ]
     ];
 
+    $product = \App\Models\Product::inRandomOrder()->first();
+
     $rand_type = rand(0, count($type) - 1);
     $current_type = $type[$rand_type];
 
     $filter_name = $name[$current_type][rand(0, count($name[$current_type]) - 1)];
     $filter_data = [
       'type' => $current_type,
-      'product_id' => \App\Models\Product::inRandomOrder()->first()->id,
+      'product_id' => $product->id,
       // 'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
-      'name' => $filter_name
+      'name' => $filter_name,
+      'category_id' => $product->category_id
     ];
 
     switch ($current_type) {

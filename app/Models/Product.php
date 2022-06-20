@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Helper\Imageable;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
@@ -10,7 +10,7 @@ use App\Models\Filter;
 
 class Product extends Model
 {
-  use HasFactory, Imageable;
+  use HasFactory, Sluggable;
 
   protected $fillable = [
     'name',
@@ -22,6 +22,15 @@ class Product extends Model
     'category_id',
   ];
 
+  public function sluggable(): array
+  {
+    return [
+      'slug' => [
+        'source' => 'name'
+      ]
+    ];
+  }
+
   // public function category()
   // {
   //   return $this->belongsTo(Category::class);
@@ -30,5 +39,10 @@ class Product extends Model
   public function filters()
   {
     return $this->hasMany(Filter::class);
+  }
+
+  public function category()
+  {
+    return $this->belongsTo(Category::class);
   }
 }

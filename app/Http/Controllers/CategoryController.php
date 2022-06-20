@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+
 class CategoryController extends Controller
 {
   // public function adminIndex()
@@ -20,7 +21,7 @@ class CategoryController extends Controller
 
   public function show(Request $request, Category $category)
   {
-    dd($request->title);
+    // dd($category->products->all());
     return view('pages.categories.index');
   }
 }

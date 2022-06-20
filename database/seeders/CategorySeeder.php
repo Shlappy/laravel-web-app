@@ -4,13 +4,12 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Product;
+use App\Models\Category;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
-class ProductSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -19,14 +18,12 @@ class ProductSeeder extends Seeder
    */
   public function run()
   {
-    File::cleanDirectory(storage_path('app/public/images/products'));
-
     Schema::disableForeignKeyConstraints();
-    DB::table('products')->truncate();
+    DB::table('categories')->truncate();
     Schema::enableForeignKeyConstraints();
 
-    Product::factory()
-      ->count(25)
+    Category::factory()
+      ->count(7)
       ->create();
   }
 }

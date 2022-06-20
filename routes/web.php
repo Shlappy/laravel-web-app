@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +19,7 @@ Route::get('/', function () {
 
 // Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.show');
 Route::get('/catalog', 'App\Http\Controllers\CategoryController@index')->name('catalog');
-Route::get('/{category}', 'App\Http\Controllers\CategoryController@show')->name('category');
+Route::get('/{category:slug}', 'App\Http\Controllers\ProductController@index')->name('products.show');
 
 
 // Admin routes

@@ -18,6 +18,9 @@ class CategoryTree extends Component
     $this->categories = empty($categories) 
       ? Category::where('parent_id', null)->get()->all()
       : $categories;
+
+    // dd($this->categories);
+
   }
 
   /**

@@ -23,7 +23,7 @@ class FilterSeeder extends Seeder
     Schema::enableForeignKeyConstraints();
 
     Filter::factory()
-      ->count(300)
+      ->count(65)
       ->create();
   }
 }

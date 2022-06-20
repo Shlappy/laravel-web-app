@@ -4,9 +4,11 @@ $images = json_decode($images);
 
 <div class="product-card">
   <div class="product-card__upper">
-    <div class="product-card__image">
-      <img src="{{ '/storage/images/products' . '/' .$images[0] }}">
-    </div>
+    @if(!is_null($images))
+      <div class="product-card__image">
+        <img src="{{ '/storage/images/products' . '/' . $images[0] }}">
+      </div>
+    @endif
   </div>
   <div class="product-card__bottom">
     <div class="product-card__name">
