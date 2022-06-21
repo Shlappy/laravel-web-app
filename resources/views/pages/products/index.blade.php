@@ -2,7 +2,7 @@
   <div class="container container--lg">
     <div class="product__blocks">
       
-      <x-product.filters class="filter filter__products"></x-product.filters>
+      <x-products.filters :filters="$filters" class="filter filter__products"></x-products.filters>
 
       <div 
         class="product__catalog-wrapper" 
@@ -19,12 +19,11 @@
         html: '',
  
         async get(url = window.location.href) {
-          await axios.get(url)
-            .then(response => this.html = response.data);
+          await axios.get(url).then(response => this.html = response.data);
 
           window.scrollTo({top: 0, behavior: 'smooth'});
         },
-      })
+      });
     })
   </script>
 </x-app-layout>

@@ -13,7 +13,16 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::table('filters', function (Blueprint $table) {
+    Schema::create('filters', function (Blueprint $table) {
+      $table->id();
+      $table->char('value', 255);
+      $table->char('code', 255);
+      $table->foreignId('specs_id')
+        ->constrained('filter_specs')
+        ->cascadeOnDelete();
+      $table->foreignId('product_id')
+        ->constrained()
+        ->cascadeOnDelete();
       $table->foreignId('category_id')
         ->nullable()
         ->constrained()
@@ -29,7 +38,11 @@ return new class extends Migration
   public function down()
   {
     Schema::table('filters', function (Blueprint $table) {
-      $table->dropColumn('category_id');
+      $table->dropForeign('filters_category_id_foreign');
+      $table->dropForeign('filters_product_id_foreign');
+      $table->dropForeign('filters_specs_id_foreign');
     });
+
+    Schema::dropIfExists('filters');
   }
 };

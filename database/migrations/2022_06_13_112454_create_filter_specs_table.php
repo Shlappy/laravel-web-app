@@ -13,15 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('filters', function (Blueprint $table) {
+    Schema::create('filter_specs', function (Blueprint $table) {
       $table->id();
       $table->string('name');
-      $table->char('type', 10);
-      $table->char('value', 250);
-      $table->foreignId('product_id')
-        ->constrained()
-        ->onDelete('cascade');
-      });
+      $table->char('type', 20);
+      $table->char('slug', 50)->nullable();
+    });
   }
 
   /**
@@ -31,6 +28,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('filters');
+    Schema::dropIfExists('filter_specs');
   }
 };

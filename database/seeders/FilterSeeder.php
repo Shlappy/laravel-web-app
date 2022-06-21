@@ -19,11 +19,12 @@ class FilterSeeder extends Seeder
   public function run()
   {
     Schema::disableForeignKeyConstraints();
+    DB::table('filter_specs')->truncate();
     DB::table('filters')->truncate();
     Schema::enableForeignKeyConstraints();
 
     Filter::factory()
-      ->count(65)
+      ->count(145)
       ->create();
   }
 }

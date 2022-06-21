@@ -12,6 +12,10 @@ class Filter extends Model
 
   public $timestamps = false;
 
+  protected $fillable = [
+    'value',
+  ];
+
   public function product()
   {
     return $this->belongsTo(Product::class);
