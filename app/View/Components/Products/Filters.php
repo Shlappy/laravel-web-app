@@ -7,13 +7,15 @@ use Illuminate\View\Component;
 
 class Filters extends Component
 {
+  public array $filters;
+
   /**
    * Create a new component instance.
    *
    * @return void
    */
-  public function __construct(public ?Collection $filters) {
-    $this->filters = $this->prepareFilters($this->filters);
+  public function __construct(Collection $filters) {
+    $this->filters = $this->prepareFilters($filters);
   }
 
   /**
@@ -29,38 +31,52 @@ class Filters extends Component
   /**
    * Prepare filters for output to a component
    * 
+   * todo: make it more oop friendly if needed...
+   * 
    * @param Collection $filters Raw filters
    */
   protected function prepareFilters($filters)
   {
     $filters = $filters->groupBy('name');
+    $outputFilters = [];
 
     foreach ($filters as $name => $filter) {
-      $filterValues = [];
+      $filterData = [
+        'name' => $name,
+        'slug' => $filter->first()->slug,
+        'type' => $filter->first()->type,
+      ];
 
       switch ($filter->first()->type) {
         case 'between':
-
           foreach ($filter as $filterItem) {
             $betweenValues[] = $filterItem->value;
           }
 
-          $outputData = [
-            'name' => $name,
-            'slug' => $filter->first()->slug,
+          $filterData += [
             'min' => min($betweenValues),
             'max' => max($betweenValues),
           ];
 
           break;
         
+        case 'checkbox':
+          $filterData['values'] = [];
+
+          foreach ($filter as $filterItem) {
+            if (in_array($filterItem->value, $filterData['values'])) continue;
+            $filterData['values'][] = $filterItem->value;
+          }
+
+          break;
+          
         default:
           break;
       }
+
+      $outputFilters[] = $filterData;
     }
 
-    dd($outputData);
-
-    return $filters;
+    return $outputFilters;
   }
 }

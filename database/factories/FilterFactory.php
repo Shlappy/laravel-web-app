@@ -13,7 +13,7 @@ class FilterFactory extends Factory
 {
 
   public array $type = [
-    'select',
+    // 'select',
     // 'list',
     'between',
     'checkbox'
@@ -31,9 +31,9 @@ class FilterFactory extends Factory
       'Бренд',
       'Подсветка'
     ],
-    'select' => [
-      'Размер'
-    ]
+    // 'select' => [
+    //   'Размер'
+    // ]
     // 'list' => []
   ];
 
