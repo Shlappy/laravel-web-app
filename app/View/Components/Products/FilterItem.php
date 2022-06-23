@@ -11,7 +11,7 @@ class FilterItem extends Component
    *
    * @return void
    */
-  public function __construct(public array $filter)
+  public function __construct( public string $type, public array $filter)
   {
     // dd($this->filter);
   }

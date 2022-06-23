@@ -18,19 +18,25 @@
 
   {{ $slot }}
 
-  {{-- <x-layout.footer></x-layout.footer> --}}
   <script src="{{ asset('js/app.js') }}"></script>
 
   <!-- move to main.js -->
   <script>
-    var sliderFilter = document.querySelectorAll('.slider-filter');
+    var sliderFilter = document.querySelectorAll('.slider-between.slider-product');
     sliderFilter.forEach((el) => {
+      const min = parseInt(el.getAttribute('min'), 10);
+      const max = parseInt(el.getAttribute('max'), 10);
+
+      console.log(el.children)
+      // let minInput = el.querySelector('[name="min"]');
+      // let maxInput = el.querySelector('[name="max"]');
+
       nouislider.create(el, {
-        start: [20, 80],
+        start: [min, max],
         connect: true,
         range: {
-          'min': 0,
-          'max': 100
+          'min': min,
+          'max': max
         }
       });
     })

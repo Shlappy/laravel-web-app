@@ -41,6 +41,7 @@ class Filters extends Component
     $outputFilters = [];
 
     foreach ($filters as $name => $filter) {
+
       $filterData = [
         'name' => $name,
         'slug' => $filter->first()->slug,
@@ -49,6 +50,8 @@ class Filters extends Component
 
       switch ($filter->first()->type) {
         case 'between':
+          $betweenValues = [];
+
           foreach ($filter as $filterItem) {
             $betweenValues[] = $filterItem->value;
           }
@@ -57,7 +60,7 @@ class Filters extends Component
             'min' => min($betweenValues),
             'max' => max($betweenValues),
           ];
-
+          
           break;
         
         case 'checkbox':
