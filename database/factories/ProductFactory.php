@@ -26,7 +26,7 @@ class ProductFactory extends Factory
       'price' => $price,
       'old_price' => $oldPrice,
       'stock' => rand(0, 50000),
-      // 'images' => json_encode($this->randomImages()),
+      'images' => json_encode($this->randomImages()),
       'category_id' => \App\Models\Category::inRandomOrder()->first()->id
     ];
   }

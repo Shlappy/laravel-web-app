@@ -67,8 +67,11 @@ class Filters extends Component
           $filterData['values'] = [];
 
           foreach ($filter as $filterItem) {
-            if (in_array($filterItem->value, $filterData['values'])) continue;
-            $filterData['values'][] = $filterItem->value;
+            if (array_key_exists($filterItem->value, $filterData['values'])) continue;
+            $filterData['values'][$filterItem->value] = [
+              'value' => $filterItem->value,
+              'code' => $filterItem->code,
+            ];
           }
 
           break;

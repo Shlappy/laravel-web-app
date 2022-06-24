@@ -15,7 +15,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * noUiSlider
  */
-window.nouislider = require('nouislider');
+window.noUiSlider = require('nouislider');
 
 
 /**

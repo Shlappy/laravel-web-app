@@ -5095,7 +5095,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * noUiSlider
  */
 
-window.nouislider = __webpack_require__(/*! nouislider */ "./node_modules/nouislider/dist/nouislider.js");
+window.noUiSlider = __webpack_require__(/*! nouislider */ "./node_modules/nouislider/dist/nouislider.js");
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -5120,6 +5120,53 @@ window.nouislider = __webpack_require__(/*! nouislider */ "./node_modules/nouisl
 /***/ (() => {
 
 // Between filter slider
+var sliderFilter = document.querySelectorAll('.slider-between.slider-product');
+sliderFilter.forEach(function (sliderEl) {
+  var min = parseInt(sliderEl.getAttribute('min'), 10);
+  var max = parseInt(sliderEl.getAttribute('max'), 10);
+  var sliderWrapper = sliderEl.parentElement;
+  var minInput = sliderWrapper.getElementsByClassName('slider__input-min')[0];
+  var maxInput = sliderWrapper.getElementsByClassName('slider__input-max')[0];
+  noUiSlider.create(sliderEl, {
+    start: [min, max],
+    connect: true,
+    range: {
+      'min': min,
+      'max': max
+    }
+  });
+  sliderEl.noUiSlider.on('update', function (values, handle) {
+    var value = values[handle];
+
+    if (handle) {
+      maxInput.value = Math.round(value);
+    } else {
+      minInput.value = Math.round(value);
+    }
+  });
+  minInput.addEventListener('change', function () {
+    sliderEl.noUiSlider.set([this.value, null]);
+  });
+  maxInput.addEventListener('change', function () {
+    sliderEl.noUiSlider.set([null, this.value]);
+  });
+}); // Collapsible animated dropdowns
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+
+    if (content.style.maxHeight) {
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
+}
 
 /***/ }),
 
