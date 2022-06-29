@@ -25,17 +25,24 @@ class ProductController extends Controller
       ->select('f.value', 'f.code', 's.name', 's.type', 's.slug')
       ->get();
 
-    // $data = DB::select('SELECT p.name FROM products as p 
-    //             INNER JOIN filters as f ON p.id = f.product_id
-    //             INNER JOIN filter_specs as s ON f.specs_id = s.id
-    //             WHERE p.category_id = 4
-    //             AND s.name = "Высота, мм" AND f.code = 2974
-    //             OR s.name = "Ширина, мм" AND f.code = 2974
-    //             ');
+    // $data = DB::table('products', 'p')
+    //   ->select('p.name')
+    //   ->join('filters as f', 'p.id', '=', 'f.product_id')
+    //   ->join('filter_specs as s', 'f.specs_id', '=', 's.id')
+    //   ->where('p.category_id', '=', $category->id)
+    //   ->where(function($query) {
+    //     $query->where('s.name', 'Высота, мм')
+    //           ->where('f.code', '2300');
+    //   })
+    //   ->orWhere(function($query) {
+    //     $query->where('s.name', 'Глубина, мм')
+    //           ->where('f.code', '542');
+    //   })
+    //   ->get();
 
     // dd($data);
     // return view('pages.index');
 
-    return view('pages.products./index', compact(['filters', 'products']));
+    return view('pages.products.index', compact(['filters', 'products']));
   }
 }

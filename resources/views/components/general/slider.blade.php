@@ -13,8 +13,8 @@
 
   @if ($type === 'between')
   <div class="form-input__row">
-    <input type="number" name="min" min="{{ $min }}" max="{{ $max }}" class="form-input slider__input-min">
-    <input type="number" name="max" min="{{ $min }}" max="{{ $max }}" class="form-input slider__input-max">
+    <input type="number" name="min" min="{{ $min }}" max="{{ $max }}" class="form-input slider__input slider__input-min">
+    <input type="number" name="max" min="{{ $min }}" max="{{ $max }}" class="form-input slider__input slider__input-max">
   </div>
   @endif
 </div>
