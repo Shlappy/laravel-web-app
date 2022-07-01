@@ -2,7 +2,7 @@
   <div class="container container--lg">
     <div class="product__blocks">
 
-      <x-products.filters x-init="$store.products.storeFilterElements()" id="filters" :filters="$filters" class="filter filter__products"></x-products.filters>
+      <x-products.filters x-init="$store.products.storeFilterElement()" id="filters" :filters="$filters" class="filter filter__products"></x-products.filters>
 
       <div class="product__catalog-wrapper" x-data x-html="$store.products.html">
       </div>
@@ -25,27 +25,89 @@
         affectedFilters: [],
 
         async get(url = window.location.href) {
-          await axios.get(url).then(response => this.html = response.data);
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          var filters = [];
+
+          if (this.affectedFilters.length) filters = this.applyFilters();
+
+          try {
+            await axios.post(url, {
+                filters
+              })
+              .then(response => {this.html = response.data});
+
+            this.scrollToTop();
+          } catch (error) {
+            console.error(error);
+          }
         },
 
-        storeFilterElements(el) {
+        async getAll(url = window.location.href) {
+          try {
+            await axios.get(url)
+              .then(response => this.html = response.data);
+
+            this.resetFilters();
+            this.scrollToTop();
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        storeFilterElement(el) {
           this.filterElements = document.querySelectorAll('#filters .filter-item');
           let checkboxes = document.querySelectorAll('#filters .filter-item .form-input__checkbox input');
 
           this.filterElements.forEach(filterEl => {
-            filterEl.addEventListener('optionChange', function(e) {
-              console.log(`event triggered by: ${e}`)
-              this.affectedFilters.push(filterEl)
-              // if (!this.affectedFilters.includes(filterEl)) {this.affectedFilters.push(filterEl); console.log(filterEl);} else {console.log('in there')};
+            filterEl.addEventListener('optionChange', (e) => {
+              if (!this.affectedFilters.includes(filterEl)) this.affectedFilters.push(filterEl);
             })
           })
 
           checkboxes.forEach(el => {
             el.addEventListener('change', e => e.target.dispatchEvent(optionChange))
+          });
+        },
+
+        resetFilters() {
+          this.affectedFilters.forEach(el => {
+            el.querySelectorAll('input').forEach(e => e.checked = false);
+
+          })
+          this.affectedFilters = [];
+        },
+
+        applyFilters() {
+          var filtersData = [];
+          let data = {
+            name: '',
+            type: '',
+            values: []
+          };
+
+          this.affectedFilters.forEach((el) => {
+            data = {
+              values: []
+            };
+            data.name = el.getAttribute('data-name');
+            data.type = el.getAttribute('data-type');
+
+            if (data.type === 'checkbox') {
+              let checked = el.querySelectorAll('input:checked');
+              checked.forEach((checkedEl) => {
+                data.values.push(checkedEl.getAttribute('data-value'));
+              })
+            }
+
+            filtersData.push(data);
+          });
+
+          return filtersData;
+        },
+
+        scrollToTop() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
           });
         }
       });

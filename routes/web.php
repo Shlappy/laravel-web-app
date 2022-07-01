@@ -19,7 +19,9 @@ Route::get('/', function () {
 
 // Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.show');
 Route::get('/catalog', 'App\Http\Controllers\CategoryController@index')->name('catalog');
+
 Route::get('/{category:slug}', 'App\Http\Controllers\ProductController@index')->name('products.show');
+Route::post('/{category:slug}', 'App\Http\Controllers\ProductController@getProducts');
 
 
 // Admin routes
