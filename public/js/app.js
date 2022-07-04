@@ -5135,7 +5135,7 @@ sliderFilter.forEach(function (sliderEl) {
       'max': max
     }
   });
-  sliderEl.noUiSlider.on('update', function (values, handle) {
+  sliderEl.noUiSlider.on('update.filter', function (values, handle) {
     var value = values[handle];
 
     if (handle) {
@@ -5143,6 +5143,9 @@ sliderFilter.forEach(function (sliderEl) {
     } else {
       minInput.value = Math.round(value);
     }
+  });
+  sliderEl.noUiSlider.on('change.filter', function (values, handle) {
+    sliderEl.dispatchEvent(optionChange);
   });
   minInput.addEventListener('change', function () {
     sliderEl.noUiSlider.set([this.value, null]);
@@ -5167,6 +5170,14 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+window.scrollToTop = function () {
+  var pos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  window.scrollTo({
+    top: pos,
+    behavior: 'smooth'
+  });
+};
 
 /***/ }),
 

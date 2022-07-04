@@ -14,6 +14,7 @@
 
         @if ($type === 'between')
           <x-general.slider 
+            data-role="filter"
             data-value="{{ $filter['name'] }}"
             :min="$filter['min'] === $filter['max'] ? 0 : $filter['min']" 
             :max="$filter['max']" 

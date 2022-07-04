@@ -59,16 +59,24 @@ class ProductController extends Controller
       if (isset($request->post()['filters']) && !empty($request->post()['filters'])) {
         foreach ($request->post()['filters'] as $key => $filter) {
 
+          // Type "checkbox"
           if ($filter['type'] === 'checkbox') {
-            $queryFunc = fn ($query) => $query->where('s.slug', $filter['name'])
+            $queryFn = fn ($query) => $query
+              ->where('s.slug', $filter['name'])
               ->whereIn('f.code', $filter['values']);
-
-            if ($key === 0) {
-              $mainQuery->where($queryFunc);
-            } else {
-              $mainQuery->orWhere($queryFunc);
-            }
           };
+
+          // Type "between"
+          if ($filter['type'] === 'between') {
+            $min = $filter['values'][0];
+            $max = $filter['values'][1];
+
+            $queryFn = fn ($query) => $query
+              ->where('s.slug', $filter['name'])
+              ->whereBetween('f.code', [$min, $max]);
+          };
+
+          $mainQuery->where($queryFn);
         }
       }
     });

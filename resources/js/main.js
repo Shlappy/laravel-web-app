@@ -17,7 +17,7 @@ sliderFilter.forEach((sliderEl) => {
     }
   });
 
-  sliderEl.noUiSlider.on('update', function (values, handle) {
+  sliderEl.noUiSlider.on('update.filter', function (values, handle) {
     let value = values[handle];
 
     if (handle) {
@@ -25,6 +25,10 @@ sliderFilter.forEach((sliderEl) => {
     } else {
       minInput.value = Math.round(value);
     }
+  });
+
+  sliderEl.noUiSlider.on('change.filter', function (values, handle) {
+    sliderEl.dispatchEvent(optionChange);
   });
 
   minInput.addEventListener('change', function () {
@@ -36,12 +40,14 @@ sliderFilter.forEach((sliderEl) => {
   });
 })
 
+
+
 // Collapsible animated dropdowns
 let coll = document.getElementsByClassName("collapsible");
 let i;
 
 for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
+  coll[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var content = this.nextElementSibling;
     if (content.style.maxHeight) {
@@ -52,5 +58,9 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-// Filters event handler
-// document
+window.scrollToTop = function (pos = 0) {
+  window.scrollTo({
+    top: pos,
+    behavior: 'smooth'
+  });
+}
