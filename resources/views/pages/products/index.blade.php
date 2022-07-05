@@ -4,8 +4,9 @@
 
       <x-products.filters id="filters" :filters="$filters" class="filter filter__products"></x-products.filters>
 
-      <div class="product__catalog-wrapper" x-data x-html="$store.products.html">
-      </div>
+      <div class="product__catalog-wrapper" x-data x-init="$nextTick(() => {
+        $store.products.ajaxButtons = document.querySelectorAll('.ajax-button');
+      })" x-html="$store.products.html"></div>
 
     </div>
   </div>
@@ -24,6 +25,7 @@
               ) ?>,
         filterElements: [],
         affectedFilters: [],
+        ajaxButtons: [],
 
         init() {
           this.filterElements = document.querySelectorAll('#filters .filter-item');
@@ -50,15 +52,17 @@
         },
 
         // Get products with selected filters
-        async get(url = window.location.href) {
+        async get(url = window.location.href, all = false) {
           var filters = [];
 
-          if (this.affectedFilters.length) filters = this.applyFilters();
+          if (this.affectedFilters.length && !all) filters = this.applyFilters();
 
           try {
-            await axios.post(url, {
-                filters
-              })
+            this.ajaxButtons.forEach(e => {
+              e.classList.add('button-disabled');
+            });
+
+            await axios.post(url, {filters})
               .then(response => {
                 this.html = response.data
               });
@@ -66,20 +70,17 @@
             scrollToTop();
           } catch (error) {
             console.error(error);
+          } finally {
+            this.ajaxButtons.forEach(e => {
+              e.classList.remove('button-disabled');
+            });
           }
         },
 
-        // Get all products
-        async getAll(url = window.location.href) {
-          try {
-            await axios.get(url)
-              .then(response => this.html = response.data);
-
-            this.resetFilters();
-            scrollToTop();
-          } catch (error) {
-            console.error(error);
-          }
+        // Get all products and reset filter
+        getAll(url = window.location.href) {
+          this.get(url, true);
+          this.resetFilters();
         },
 
         // Reset filter to its initial state

@@ -28,41 +28,40 @@ class ProductController extends Controller
     return view('pages.products.index', compact(['filters', 'products']));
   }
 
+  /**
+   * Get products with the selected filters
+   */
   public function getProducts(Request $request, Category $category)
   {
-    $productsQuery = DB::table('products', 'p')
-      ->distinct('p.name')
-      ->select('p.name', 'p.price', 'p.old_price', 'p.images')
-      ->join('filters as f', 'p.id', '=', 'f.product_id')
-      ->join('filter_specs as s', 'f.specs_id', '=', 's.id')
-      ->where('p.category_id', '=', $category->id);
+    $filters = $request->post()['filters'];
 
-    // // temp
-    // $filters = [
-    //   [
-    //     'type' => 'checkbox',
-    //     'name' => 'brend',
-    //     'values' => [
-    //       'flex'
-    //     ]
-    //   ],
-    //   [
-    //     'type' => 'checkbox',
-    //     'name' => 'proizvoditel',
-    //     'values' => [
-    //       'longex'
-    //     ]
-    //   ],
-    // ];
+    if (!$filters) {
+      $products = Product::whereBelongsTo($category)->paginate(12);
 
-    $productsQuery->where(function ($mainQuery) use ($request) {
-      if (isset($request->post()['filters']) && !empty($request->post()['filters'])) {
-        foreach ($request->post()['filters'] as $key => $filter) {
+      if ($products->isEmpty()) return json_encode(['Товаров в данной категории нет']);
+
+      return response()->json(
+        view('components.product.product-list', compact('products'))->render()
+      );
+    }
+
+    $specs = [];
+    foreach ($filters as $filter) {
+      $specs[] = $filter['name'];
+    }
+
+    $productsSubQuery = DB::table('filters', 'f')
+      ->select('f.product_id')
+      ->where('f.category_id', '=', $category->id)
+      ->join('filter_specs as s', 'f.specs_id', '=', 's.id');
+
+    $productsSubQuery->whereIn('s.slug', $specs)
+      ->where(function ($mainQuery) use ($filters) {
+        foreach ($filters as $key => $filter) {
 
           // Type "checkbox"
           if ($filter['type'] === 'checkbox') {
             $queryFn = fn ($query) => $query
-              ->where('s.slug', $filter['name'])
               ->whereIn('f.code', $filter['values']);
           };
 
@@ -72,16 +71,26 @@ class ProductController extends Controller
             $max = $filter['values'][1];
 
             $queryFn = fn ($query) => $query
-              ->where('s.slug', $filter['name'])
-              ->whereBetween('f.code', [$min, $max]);
+              ->whereBetween('f.code', [(int) $min, (int) $max]);
           };
 
-          $mainQuery->where($queryFn);
+          if ($key) {
+            $mainQuery->orWhere($queryFn);
+          } else {
+            $mainQuery->where($queryFn);
+          }
         }
-      }
-    });
+      })
+      ->groupBy('f.product_id', 'f.specs_id');
 
-    $products = $productsQuery->paginate(12);
+    $productIds = $productsSubQuery->get();
+    $ids = [];
+    foreach ($productIds as $id) {
+      $ids[] = $id->product_id;
+    }
+
+    $products = Product::select('name', 'price', 'old_price', 'images')
+      ->whereIn('id', $ids)->paginate(12);
 
     if ($products->isEmpty()) return json_encode(['Товары с такими фильтрами не найдены']);
 
