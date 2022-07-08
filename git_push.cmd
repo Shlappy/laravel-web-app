@@ -1,7 +1,8 @@
 @echo off
-chcp 65001
+echo adding...
 git add -A
+echo commiting...
 git commit -m "save changes"
+echo pushing...
 git push
-echo Успешно
-pause
+echo Success
