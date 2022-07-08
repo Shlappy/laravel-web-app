@@ -35,6 +35,7 @@ class ProductController extends Controller
   {
     $filters = $request->post()['filters'];
 
+    // Retrieve all products
     if (!$filters) {
       $products = Product::whereBelongsTo($category)->paginate(12);
 
@@ -51,9 +52,10 @@ class ProductController extends Controller
     }
 
     $productsSubQuery = DB::table('filters', 'f')
-      ->select('f.product_id')
+      ->select('p.id', 'p.name', 'p.price', 'p.images')
       ->where('f.category_id', '=', $category->id)
-      ->join('filter_specs as s', 'f.specs_id', '=', 's.id');
+      ->join('filter_specs as s', 'f.specs_id', '=', 's.id')
+      ->join('products as p', 'f.product_id', '=', 'p.id');
 
     $productsSubQuery->whereIn('s.slug', $specs)
       ->where(function ($mainQuery) use ($filters) {
@@ -83,14 +85,11 @@ class ProductController extends Controller
       })
       ->groupBy('f.product_id', 'f.specs_id');
 
-    $productIds = $productsSubQuery->get();
-    $ids = [];
-    foreach ($productIds as $id) {
-      $ids[] = $id->product_id;
-    }
-
-    $products = Product::select('name', 'price', 'old_price', 'images')
-      ->whereIn('id', $ids)->paginate(12);
+    $products = Product::select('id', 'name', 'price', 'images', DB::raw('count(*) as count'))
+      ->fromSub($productsSubQuery, 's')
+      ->groupBy('id')
+      ->having('count', '=', count($filters))
+      ->paginate(12);
 
     if ($products->isEmpty()) return json_encode(['Товары с такими фильтрами не найдены']);
 
