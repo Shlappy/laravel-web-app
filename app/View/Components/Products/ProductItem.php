@@ -8,6 +8,7 @@ class ProductItem extends Component
 {
   public string $price;
   public string $oldPrice;
+  public ?array $images;
 
   /**
    * Create a new component instance.
@@ -16,12 +17,13 @@ class ProductItem extends Component
    */
   public function __construct(
     public string $name = '',
-    public ?string $images = '',
+    $images = null,
     $price = null,
     $oldPrice = null
   ) {
     $this->price = convert_format_price($price);
     $this->oldPrice = convert_format_price($oldPrice);
+    $this->images = is_null($images) ? [] : json_decode($images);
   }
 
   /**

@@ -9,7 +9,7 @@
   <title>eCommerce Showcase</title>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/app.css?{{ time() }}">
   <link href="http://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 </head>
 

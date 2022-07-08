@@ -1,8 +1,7 @@
-<?php
-$images = json_decode($images);
-?>
-
 <div class="product-card">
+  <div class="product-card__overhead">
+    
+  </div>
   <div class="product-card__upper">
     @if(!is_null($images))
       <div class="product-card__image">
