@@ -1,6 +1,8 @@
 <div class="product-card">
-  <div class="product-card__overhead">
-    
+  <div class="product-card__elements">
+    <x-general.button class="button__buy product-card__buy">В корзину</x-general.button>
+    <x-general.button class="button__bg button__bg--copy" type="round" div="true"></x-general.button>
+    <x-general.button class="button__bg button__bg--heart" type="round" div="true"></x-general.button>
   </div>
   <div class="product-card__upper">
     @if(!is_null($images))
