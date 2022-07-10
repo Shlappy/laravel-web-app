@@ -83,6 +83,8 @@ class ProductController extends Controller
       })
       ->groupBy('f.product_id', 'f.specs_id');
 
+      //SELECT CONCAT (col1, '_', col2) AS Group1 ... GROUP BY Group1 //try this
+
     $productIds = $productsSubQuery->get();
     $ids = [];
     foreach ($productIds as $id) {
