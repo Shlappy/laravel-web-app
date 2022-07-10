@@ -33,7 +33,7 @@ class ProductController extends Controller
    */
   public function getProducts(Request $request, Category $category)
   {
-    $filters = $request->post()['filters'];
+    $filters = $request->filters;
 
     // Retrieve all products
     if (!$filters) {
