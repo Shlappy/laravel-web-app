@@ -1,5 +1,66 @@
 .button {
+  cursor: pointer;
+  position: relative;
+  transition: 0.25s;
+  border: none;
+  background-color: white;
+  z-index: 10;
+
   &-disabled {
     pointer-events: none;
+  }
+
+  &__round {
+    @diameter: 50px;
+    border-radius: 100%;
+    width: @diameter;
+    height: @diameter;
+    background-color: fade(#fff, 20%);
+    box-shadow: 2px 4px 10px fade(#000, 12%);
+  }
+
+  &__bg {
+    position: relative;
+    
+    &:hover {
+      background-color: fade(#fff, 50%);
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      filter: invert(96%) sepia(100%) saturate(14%) hue-rotate(220deg) brightness(104%) contrast(103%); //white
+      background-size: 25px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    &--heart {
+      &::before {
+        background-image: url("@{images}icons/heart-icon.svg");
+      }
+    }
+
+    &--copy {
+      &::before {
+        background-image: url("@{images}icons/copy-icon.svg");
+      }
+    }
+  }
+
+  &__buy {
+    width: 155px;
+    padding: 15px 10px;
+    border-radius: 50px;
+    box-shadow: 3px 5px 10px fade(#000, 20%);
+
+    &:hover {
+      box-shadow: 3px 5px 15px fade(#000, 40%);
+    }
   }
 }
