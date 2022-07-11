@@ -1,7 +1,7 @@
 <x-app-layout>
-  <div class="product">
+  <div class="basket">
     <div class="container">
-
+      Basket
     </div>
   </div>
 </x-app-layout>

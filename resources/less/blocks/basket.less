@@ -1,0 +1,28 @@
+.basket {
+  &__link {
+    position: relative;
+    cursor: pointer;
+    width: 30px;
+    height: 100%;
+    margin-right: 25px;
+    background: no-repeat center/contain url("@{images}icons/shopping-cart.svg");
+    color: transparent;
+
+    &::before {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      content: attr(data-count);
+      background-color: #ce1b28;
+      color: #fff;
+      border-radius: 100%;
+      width: 23px;
+      height: 23px;
+      font-size: 14px;
+      padding: 5px;
+      right: -15px;
+      top: 5px;
+    }
+  }
+}

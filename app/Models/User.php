@@ -7,10 +7,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class User extends Authenticatable
 {
-  use HasApiTokens, HasFactory, Notifiable;
+  use HasApiTokens, HasFactory, Notifiable, Sluggable;
+
+  /**
+   * Create slug.
+   */
+  public function sluggable(): array
+  {
+    return [
+      'slug' => [
+        'source' => 'name'
+      ]
+    ];
+  }
 
   /**
    * The attributes that are mass assignable.
@@ -18,9 +31,9 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $fillable = [
-      'name',
-      'email',
-      'password',
+    'name',
+    'email',
+    'password',
   ];
 
   /**
@@ -29,8 +42,8 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $hidden = [
-      'password',
-      'remember_token',
+    'password',
+    'remember_token',
   ];
 
   /**
@@ -39,11 +52,11 @@ class User extends Authenticatable
    * @var array<string, string>
    */
   protected $casts = [
-      'email_verified_at' => 'datetime',
+    'email_verified_at' => 'datetime',
   ];
 
   public function storeUser($request)
-  {   
+  {
     $this->name = $request->name;
     $this->email = $request->email;
     $this->password = bcrypt($request->password);

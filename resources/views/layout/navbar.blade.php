@@ -1,10 +1,21 @@
 <nav class="menu menu__main">
   <a class="logo" href="/">Go Home</a>
   <ul class="menu__list">
+
     @foreach ($navbarItems as $item)
-      <x-layout.navbar-item :href="$item['href']">{{ $item['label'] }}</x-layout.navbar-item>
+      <x-layout.navbar-item class="{{ $item['class'] ?? '' }}" :href="$item['href']">{{ $item['label'] }}</x-layout.navbar-item>
     @endforeach
+
+    <x-layout.navbar-item :href="'/basket'" class="basket__link" data-count="0">link</x-layout.navbar-item>
+
+    @auth
+      <x-layout.navbar-item :href="route('account', ['user' => auth()->user()])" class="account__icon">
+        <img src="{{ auth()->user()->image ?? '/storage/images/icons/user-icon.svg' }}">
+      </x-layout.navbar-item>
+    @endauth
+
   </ul>
+
   <div class="menu__mobile" @click="toggleMenu = true">
     <x-layout.navbar-hamburger></x-layout.navbar-hamburger>
     <span>Menu</span>

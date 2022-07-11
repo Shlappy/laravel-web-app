@@ -20,6 +20,7 @@
     transition: @speed;
     opacity: 0;
     z-index: 1;
+    pointer-events: none;
   }
 
   &:hover {
@@ -48,9 +49,11 @@
     right: 0;
     bottom: 0;
     top: 0;
+    height: max-content;
     width: 100%;
+    padding: 0 @padding;
+    margin: auto;
     transition: @speed;
-    padding: @padding;
     z-index: 2;
   }
 

@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +20,16 @@ Route::get('/', function () {
   return view('pages.index');
 });
 
-// Route::get('products', 'App\Http\Controllers\ProductController@index')->name('products.show');
-Route::get('catalog', 'App\Http\Controllers\CategoryController@index')->name('catalog');
+Route::get('catalog', [CategoryController::class, 'index'])->name('catalog');
 
-Route::get('products/{category:slug}', 'App\Http\Controllers\ProductController@index')->name('products.show');
-Route::post('products/{category:slug}', 'App\Http\Controllers\ProductController@getProducts');
+Route::controller(ProductController::class)->group(function () {
+  Route::get('products/{category:slug}', 'index')->name('products');
+  Route::post('products/{category:slug}','getProducts');
+  Route::get('product/{product:slug}','show')->name('products.show');
+  Route::get('basket', 'showBasket')->name('basket');
+});
 
+Route::get('user/{user:id}', [UserController::class, 'show'])->name('account');
 
 // Admin routes
 // Route::prefix('admin')->group(function () {
@@ -31,7 +38,7 @@ Route::post('products/{category:slug}', 'App\Http\Controllers\ProductController@
 //     Route::post('/', 'store')->name('category.create');
 //   });
 
-//   Route::post('/products/{product}', 'App\Http\Controllers\ProductController@create')->name('product.create');
+//   Route::post('/products/{product}', 'ProductController@create')->name('product.create');
 // });
 
 require __DIR__ . '/auth.php';

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+  /**
+   * Category products page
+   */
   public function index(Request $request, Category $category)
   {
     $products = Product::whereBelongsTo($category)->paginate(12);
@@ -25,7 +28,23 @@ class ProductController extends Controller
       ->select('f.value', 'f.code', 's.name', 's.type', 's.slug')
       ->get();
 
-    return view('pages.products.index', compact(['filters', 'products']));
+    return view('pages.products.category-products', compact(['filters', 'products']));
+  }
+
+  /**
+   * Product page
+   */
+  public function show(Product $product)
+  {
+    return view('pages.products.index', compact(['product']));
+  }
+
+  /**
+   * Basket page
+   */
+  public function showBasket()
+  {
+    return view('pages.products.basket');
   }
 
   /**
@@ -52,7 +71,7 @@ class ProductController extends Controller
     }
 
     $productsSubQuery = DB::table('filters', 'f')
-      ->select('p.id', 'p.name', 'p.price', 'p.images')
+      ->select('p.id', 'p.name', 'p.price', 'p.images', 'p.old_price', 'p.slug')
       ->where('f.category_id', '=', $category->id)
       ->join('filter_specs as s', 'f.specs_id', '=', 's.id')
       ->join('products as p', 'f.product_id', '=', 'p.id');
@@ -85,7 +104,7 @@ class ProductController extends Controller
       })
       ->groupBy('f.product_id', 'f.specs_id');
 
-    $products = Product::select('id', 'name', 'price', 'images', DB::raw('count(*) as count'))
+    $products = Product::select(DB::raw('*'), DB::raw('count(*) as count'))
       ->fromSub($productsSubQuery, 's')
       ->groupBy('id')
       ->having('count', '=', count($filters))

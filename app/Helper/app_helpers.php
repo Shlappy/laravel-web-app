@@ -11,11 +11,11 @@ if (!function_exists('convert_price')) {
 }
 
 
-if (!function_exists('convert_format_price')) {
+if (!function_exists('format_price')) {
   /**
    * @return string Formatted price
    */
-  function convert_format_price(int|null $price): string
+  function format_price(int|null $price): string
   {
     return is_null($price) ? '0' : number_format($price / 100, 0, '.', ' ');
   }

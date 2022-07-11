@@ -1,4 +1,4 @@
-<li {{ $attributes->merge([]) }} class="menu__item">
+<li {{ $attributes->merge(['class' => 'menu__item']) }}>
   <a href="{{ $href }}">
     {{ $slot }}
   </a>

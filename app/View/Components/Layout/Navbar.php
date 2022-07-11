@@ -17,11 +17,9 @@ class Navbar extends Component
   public function __construct()
   {
     $this->navbarItems = [
-      ['label' => 'Home', 'href' => '/'],
       ['label' => 'Catalog', 'href' => '/catalog'],
       ['label' => 'Products', 'href' => '/products'],
-      ['label' => 'About', 'href' => '/about'],
-      ['label' => 'Other projects', 'href' => '/other'],
+      // ['label' => 'Other projects', 'href' => '/other'],
     ];
   }
 
