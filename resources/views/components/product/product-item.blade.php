@@ -1,4 +1,4 @@
-<div class="product-card">
+<div class="product-card" data-id="{{ $product->id }}">
   <div class="product-card__elements">
     <x-general.button class="button__buy product-card__buy">В корзину</x-general.button>
     <x-general.button class="button__bg button__bg--copy" type="round" div="true"></x-general.button>

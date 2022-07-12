@@ -10,39 +10,34 @@ use App\Models\Filter;
 
 class Product extends Model
 {
-  use HasFactory, Sluggable;
+    use HasFactory, Sluggable, \App\Models\Concerns\UsesUuid;
 
-  protected $fillable = [
-    'name',
-    'price',
-    'old_price',
-    'images',
-    'stock',
-    'is_popular',
-    'category_id',
-  ];
-
-  public function sluggable(): array
-  {
-    return [
-      'slug' => [
-        'source' => 'name'
-      ]
+    protected $fillable = [
+        'name',
+        'price',
+        'old_price',
+        'images',
+        'stock',
+        'is_popular',
+        'category_id',
     ];
-  }
 
-  // public function category()
-  // {
-  //   return $this->belongsTo(Category::class);
-  // }
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 
-  public function filters()
-  {
-    return $this->hasMany(Filter::class);
-  }
+    public function filters()
+    {
+        return $this->hasMany(Filter::class);
+    }
 
-  public function category()
-  {
-    return $this->belongsTo(Category::class);
-  }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

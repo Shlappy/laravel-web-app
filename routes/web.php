@@ -17,16 +17,23 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-  return view('pages.index');
+    return view('pages.index');
 });
 
 Route::get('catalog', [CategoryController::class, 'index'])->name('catalog');
 
 Route::controller(ProductController::class)->group(function () {
-  Route::get('products/{category:slug}', 'index')->name('products');
-  Route::post('products/{category:slug}','getProducts');
-  Route::get('product/{product:slug}','show')->name('products.show');
-  Route::get('basket', 'showBasket')->name('basket');
+    Route::get('products/{category:slug}', 'index')->name('products');
+    Route::post('products/{category:slug}', 'getProducts');
+    Route::get('product/{product:slug}', 'show')->name('products.show');
+});
+
+Route::controller(CartController::class)->group(function () {
+    Route::get('cart', 'index')->name('cart.list');
+    Route::post('cart', 'addToCart')->name('cart.store');
+    Route::patch('update-cart', 'updateCart')->name('cart.update');
+    Route::post('remove', 'removeCart')->name('cart.remove');
+    Route::post('clear-cart', 'clearAllCart')->name('cart.clear');
 });
 
 Route::get('user/{user:id}', [UserController::class, 'show'])->name('account');

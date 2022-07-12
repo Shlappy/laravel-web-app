@@ -85,7 +85,7 @@ class FilterFactory extends Factory
   }
 
   /**
-   * Create or update filter spec a nd return id
+   * Create or update filter spec and return id
    * 
    * @return int Spec id
    */

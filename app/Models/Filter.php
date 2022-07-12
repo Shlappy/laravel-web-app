@@ -8,21 +8,21 @@ use App\Models\Product;
 
 class Filter extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  public $timestamps = false;
+    public $timestamps = false;
 
-  protected $fillable = [
-    'value',
-  ];
+    protected $fillable = [
+        'value',
+    ];
 
-  public function product()
-  {
-    return $this->belongsTo(Product::class);
-  }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
-  public function category()
-  {
-    return $this->belongsTo(Product::class);
-  }
+    public function category()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

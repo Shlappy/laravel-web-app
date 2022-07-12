@@ -7,16 +7,17 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-  /**
-   * Seed the application's database.
-   *
-   * @return void
-   */
-  public function run()
-  {
-    $this->call([
-      ProductSeeder::class,
-      FilterSeeder::class,
-    ]);
-  }
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            FilterSeeder::class,
+        ]);
+    }
 }

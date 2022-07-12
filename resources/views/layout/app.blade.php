@@ -18,7 +18,7 @@
 
   {{ $slot }}
 
-  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}?{{ time() }}"></script>
 </body>
 
 </html>

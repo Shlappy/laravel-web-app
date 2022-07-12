@@ -12,21 +12,21 @@ use Illuminate\Support\Facades\File;
 
 class ProductSeeder extends Seeder
 {
-  /**
-   * Run the database seeds.
-   *
-   * @return void
-   */
-  public function run()
-  {
-    File::cleanDirectory(storage_path('app/public/images/products'));
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        File::cleanDirectory(storage_path('app/public/images/products'));
 
-    Schema::disableForeignKeyConstraints();
-    DB::table('products')->truncate();
-    Schema::enableForeignKeyConstraints();
+        Schema::disableForeignKeyConstraints();
+        DB::table('products')->truncate();
+        Schema::enableForeignKeyConstraints();
 
-    Product::factory()
-      ->count(130)
-      ->create();
-  }
+        Product::factory()
+            ->count(130)
+            ->create();
+    }
 }

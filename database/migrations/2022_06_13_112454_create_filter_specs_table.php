@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
-  public function up()
-  {
-    Schema::create('filter_specs', function (Blueprint $table) {
-      $table->id();
-      $table->string('name');
-      $table->char('type', 20);
-      $table->char('slug', 50)->nullable();
-    });
-  }
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('filter_specs', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->char('type', 20);
+            $table->char('slug', 50)->nullable();
+        });
+    }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
-  public function down()
-  {
-    Schema::dropIfExists('filter_specs');
-  }
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('filter_specs');
+    }
 };

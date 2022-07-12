@@ -11,20 +11,20 @@ use Illuminate\Support\Facades\DB;
 
 class FilterSeeder extends Seeder
 {
-  /**
-   * Run the database seeds.
-   *
-   * @return void
-   */
-  public function run()
-  {
-    Schema::disableForeignKeyConstraints();
-    DB::table('filter_specs')->truncate();
-    DB::table('filters')->truncate();
-    Schema::enableForeignKeyConstraints();
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Schema::disableForeignKeyConstraints();
+        DB::table('filter_specs')->truncate();
+        DB::table('filters')->truncate();
+        Schema::enableForeignKeyConstraints();
 
-    Filter::factory()
-      ->count(445)
-      ->create();
-  }
+        Filter::factory()
+            ->count(445)
+            ->create();
+    }
 }
