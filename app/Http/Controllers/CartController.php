@@ -17,18 +17,20 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        if (Cart::get($request->id)) {
+        $cart = Cart::getContent();
+
+        if ($cart->has($request->id)) {
             $this->updateCart($request);
             return redirect()->route('cart.list');
         }
-        
+
         $product = Product::findOrFail($request->id);
 
         Cart::add([
             'id' => $product->id,
             'name' => $product->name,
             'price' => $product->price,
-            'quantity' => $request->quantity,
+            'quantity' => 1,
             'attributes' => [
                 'image' => $product->image,
             ]
@@ -44,7 +46,7 @@ class CartController extends Controller
             [
                 'quantity' => [
                     'relative' => false,
-                    'value' => $request->quantity
+                    'value' => 1
                 ],
             ]
         );
