@@ -5182,7 +5182,7 @@ for (i = 0; i < coll.length; i++) {
 document.addEventListener("DOMContentLoaded", function () {
   // Add product to cart
   var buyButton = document.querySelectorAll('[data-action="buy"]');
-  console.log(buyButton);
+  if (!buyButton.length) return;
   buyButton.forEach(function (e) {
     e.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       return _regeneratorRuntime().wrap(function _callee$(_context) {

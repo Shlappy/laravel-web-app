@@ -60,7 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add product to cart
   let buyButton = document.querySelectorAll('[data-action="buy"]');
-  console.log(buyButton)
+
+  if (!buyButton.length) return;
+
   buyButton.forEach(e => {
     e.addEventListener('click', async function () {
       id = e.closest('[data-id]').dataset.id;
