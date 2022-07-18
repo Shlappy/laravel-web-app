@@ -1,3 +1,4 @@
 *
 !.gitignore
+!dots.svg
 !images/all/*
