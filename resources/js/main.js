@@ -70,6 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         await axios.post('/cart', { id })
           .then(res => {
+            updateCartAmount();
+
             Alpine.store('products').headerCart = 'HEADER CART'; // html here
             console.log(Alpine.store('products').headerCart);
           })
@@ -80,6 +82,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+
+function updateCartAmount() {
+  let cartLink = document.getElementById('cart-link');
+  // cartLink.innerText = ;
+}
 
 window.scrollToTop = function (pos = 0) {
   window.scrollTo({

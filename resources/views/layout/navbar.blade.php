@@ -3,15 +3,26 @@
     <ul class="menu__list">
 
         @foreach ($navbarItems as $item)
-        <x-layout.navbar-item class="{{ $item['class'] ?? '' }}" :href="$item['href']">{{ $item['label'] }}</x-layout.navbar-item>
+            <x-layout.navbar-item class="{{ $item['class'] ?? '' }}" :href="$item['href']">{{ $item['label'] }}</x-layout.navbar-item>
         @endforeach
 
-        <x-layout.navbar-item :href="'/cart'" class="cart__link" data-count="0">link</x-layout.navbar-item>
+        @guest
+            <x-layout.navbar-item :href="route('login')">
+                Login
+            </x-layout.navbar-item>
+            <x-layout.navbar-item :href="route('register')">
+                Register
+            </x-layout.navbar-item>
+
+            <x-layout.navbar-item :href="'/cart'" class="cart__link" id="cart-link" data-count="0">link</x-layout.navbar-item>
+        @endguest
 
         @auth
-        <x-layout.navbar-item :href="route('account', ['user' => auth()->user()])" class="account__icon">
-            <img src="{{ auth()->user()->image ?? '/storage/images/icons/user-icon.svg' }}">
-        </x-layout.navbar-item>
+            <x-layout.navbar-item :href="'/cart'" class="cart__link" id="cart-link" data-count="0">link</x-layout.navbar-item>
+        
+            <x-layout.navbar-item :href="route('account', ['user' => auth()->user()])" class="account__icon">
+                <img src="{{ auth()->user()->image ?? '/storage/images/assets/icons/user-icon.svg' }}">
+            </x-layout.navbar-item>
         @endauth
 
     </ul>

@@ -21,7 +21,6 @@ class CartController extends Controller
 
         if ($cart->has($request->id)) {
             $this->updateCart($request);
-            return redirect()->route('cart.list');
         }
 
         $product = Product::findOrFail($request->id);
@@ -36,7 +35,8 @@ class CartController extends Controller
             ]
         ]);
 
-        return redirect()->route('cart.list');
+        return;
+        // return redirect()->route('cart.list');
     }
 
     public function updateCart(Request $request)
@@ -53,7 +53,8 @@ class CartController extends Controller
 
         session()->flash('success', 'Item Cart is Updated Successfully !');
 
-        return redirect()->route('cart.list');
+        return;
+        // return redirect()->route('cart.list');
     }
 
     public function removeCart(Request $request)
