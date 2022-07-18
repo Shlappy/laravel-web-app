@@ -2,5 +2,5 @@
 !.gitignore
 !images/
 images/*
-!images/all/
-!images/all/**
+!images/assets/
+!images/assets/**
