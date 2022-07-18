@@ -1,4 +1,3 @@
 *
 !.gitignore
-!dots.svg
-!images/all/*
+!images/moveable/
