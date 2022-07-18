@@ -2,5 +2,5 @@
 !.gitignore
 !images/
 images/*
-!images/moveable/
-!images/moveable/**
+!images/all/
+!images/all/**
