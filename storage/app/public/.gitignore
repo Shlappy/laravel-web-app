@@ -3,4 +3,4 @@
 !images/
 images/*
 !images/moveable/
-!images/moveable/*
+!images/moveable/**
