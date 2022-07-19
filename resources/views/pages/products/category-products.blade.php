@@ -19,11 +19,7 @@
 
         document.addEventListener('alpine:init', () => {
             Alpine.store('products', {
-                html: <?= str_replace(
-                            ['\u0022', '\u0027'],
-                            ["\\\"", "\\'"],
-                            json_encode(view('components.product.product-list', compact('products'))->render())
-                        ) ?>,
+                html: {{ Js::from(view('components.product.product-list', compact('products'))->render()) }},
                 headerCart: '',
                 filterElements: [],
                 affectedFilters: [],

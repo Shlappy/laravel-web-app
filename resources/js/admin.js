@@ -4,6 +4,5 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
-// Main app scripts
+// Main admin scripts
 import './main';
-import './site';

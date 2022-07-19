@@ -35,7 +35,9 @@ class CartController extends Controller
             ]
         ]);
 
-        return;
+        return response()->json([
+            'count' => Cart::getTotalQuantity()
+        ]);
         // return redirect()->route('cart.list');
     }
 
@@ -53,7 +55,9 @@ class CartController extends Controller
 
         session()->flash('success', 'Item Cart is Updated Successfully !');
 
-        return;
+        return response()->json([
+            'count' => Cart::getTotalQuantity()
+        ]);
         // return redirect()->route('cart.list');
     }
 

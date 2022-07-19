@@ -13,13 +13,17 @@
             <x-layout.navbar-item :href="route('register')">
                 Register
             </x-layout.navbar-item>
-
-            <x-layout.navbar-item :href="'/cart'" class="cart__link" id="cart-link" data-count="0">link</x-layout.navbar-item>
         @endguest
 
+        <x-layout.navbar-item 
+            :href="route('cart.list')" 
+            class="cart__link" 
+            id="cart-link" 
+            x-bind:data-count="$store.cart.count">
+            link
+        </x-layout.navbar-item>
+
         @auth
-            <x-layout.navbar-item :href="'/cart'" class="cart__link" id="cart-link" data-count="0">link</x-layout.navbar-item>
-        
             <x-layout.navbar-item :href="route('account', ['user' => auth()->user()])" class="account__icon">
                 <img src="{{ auth()->user()->image ?? '/storage/images/assets/icons/user-icon.svg' }}">
             </x-layout.navbar-item>

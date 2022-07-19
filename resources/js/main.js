@@ -56,38 +56,6 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-
-  // Add product to cart
-  let buyButton = document.querySelectorAll('[data-action="buy"]');
-
-  if (!buyButton.length) return;
-
-  buyButton.forEach(e => {
-    e.addEventListener('click', async function () {
-      id = e.closest('[data-id]').dataset.id;
-
-      try {
-        await axios.post('/cart', { id })
-          .then(res => {
-            updateCartAmount();
-
-            Alpine.store('products').headerCart = 'HEADER CART'; // html here
-            console.log(Alpine.store('products').headerCart);
-          })
-      } catch (error) {
-        console.error(error);
-      }
-    })
-  });
-
-});
-
-function updateCartAmount() {
-  let cartLink = document.getElementById('cart-link');
-  // cartLink.innerText = ;
-}
-
 window.scrollToTop = function (pos = 0) {
   window.scrollTo({
     top: pos,
