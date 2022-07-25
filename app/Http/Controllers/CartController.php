@@ -17,13 +17,12 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        $cart = Cart::getContent();
-
-        if ($cart->has($request->id)) {
+        if (Cart::has($request->id)) {
             $this->updateCart($request);
 
             return response()->json([
-                'count' => Cart::getTotalQuantity()
+                'count' => Cart::getTotalQuantity(),
+                'id' => $request->id
             ]);
         }
 
@@ -40,7 +39,8 @@ class CartController extends Controller
         ]);
 
         return response()->json([
-            'count' => Cart::getTotalQuantity()
+            'count' => Cart::getTotalQuantity(),
+            'id' => $request->id
         ]);
         // return redirect()->route('cart.list');
     }
