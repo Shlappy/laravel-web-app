@@ -21,6 +21,10 @@ class CartController extends Controller
 
         if ($cart->has($request->id)) {
             $this->updateCart($request);
+
+            return response()->json([
+                'count' => Cart::getTotalQuantity()
+            ]);
         }
 
         $product = Product::findOrFail($request->id);
@@ -53,7 +57,7 @@ class CartController extends Controller
             ]
         );
 
-        session()->flash('success', 'Item Cart is Updated Successfully !');
+        session()->flash('success', 'Item cart has been updated successfully');
 
         return response()->json([
             'count' => Cart::getTotalQuantity()
@@ -64,9 +68,11 @@ class CartController extends Controller
     public function removeCart(Request $request)
     {
         Cart::remove($request->id);
-        session()->flash('success', 'Item Cart Remove Successfully !');
+        session()->flash('success', 'Item cart has been removed successfully');
 
-        return redirect()->route('cart.list');
+        return response()->json([
+            'count' => Cart::getTotalQuantity()
+        ]);
     }
 
     public function clearAllCart()
@@ -75,6 +81,8 @@ class CartController extends Controller
 
         session()->flash('success', 'All Item Cart Clear Successfully !');
 
-        return redirect()->route('cart.list');
+        return response()->json([
+            'count' => Cart::getTotalQuantity()
+        ]);
     }
 }

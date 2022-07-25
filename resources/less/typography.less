@@ -8,17 +8,28 @@ body {
   background-color: @bg-color-light;
 
   &::before {
-    position: absolute;
+    display: block;
     content: '';
     top: 0;
     left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-    opacity: 0.35;
-    background-image: url(/storage/images/dots.svg);
-    background-repeat: repeat;
+    height: 56px;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
   }
+
+  //   &::after {
+  //     position: absolute;
+  //     content: '';
+  //     top: 0;
+  //     left: 0;
+  //     bottom: 0;
+  //     right: 0;
+  //     z-index: -1;
+  //     opacity: 0.35;
+  //     background-image: url(/storage/images/dots.svg);
+  //     background-repeat: repeat;
+  //   }
 }
 
 button {
@@ -26,7 +37,7 @@ button {
 }
 
 input {
-  transition: .5s;
+  transition: 0.5s;
 }
 
 p {
@@ -85,7 +96,7 @@ li {
 a {
   text-decoration: none;
   color: @color-font;
-  transition: .2s;
+  transition: 0.2s;
   color: inherit;
 }
 
