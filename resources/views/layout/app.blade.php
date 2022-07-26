@@ -18,6 +18,7 @@
 
   {{ $slot }}
 
+  <x-modals></x-modals>
   <script src="{{ asset('js/app.js') }}?{{ time() }}"></script>
 </body>
 

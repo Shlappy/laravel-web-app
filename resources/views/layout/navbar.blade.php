@@ -8,19 +8,23 @@
 
         @guest
             <x-layout.navbar-item :href="route('login')">
-                Login
+                Войти
             </x-layout.navbar-item>
             <x-layout.navbar-item :href="route('register')">
-                Register
+                Регистрация
             </x-layout.navbar-item>
         @endguest
 
-        <x-layout.navbar-item 
+        <x-layout.navbar-item
             :href="route('cart.list')" 
             class="cart__link" 
             id="cart-link" 
-            x-bind:data-count="$store.cart.count">
-            link
+            >
+            <span class="cart__icon" x-bind:data-count="$store.cart.count"></span>
+            <div class="cart__header-total">
+                <span class="cart__header-price" x-text="$store.cart.subTotal"></span>
+                <span>₽</span>
+            </div>
         </x-layout.navbar-item>
 
         @auth

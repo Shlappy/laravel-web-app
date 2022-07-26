@@ -5087,58 +5087,68 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   return {
-    id: '',
-    // Add product to cart
-    // addToCart() {
-    //   let buyButton = document.querySelectorAll('[data-action="buy"]')
-    //   if (!buyButton.length) return
-    //   buyButton.forEach((e) => {
-    //     e.addEventListener('click', async function () {
-    //       id = e.closest('.product-card[data-id]').dataset.id
-    //       try {
-    //         await axios.post('/cart', { id }).then((res) => {
-    //           // Alpine.store('products').headerCart = res.data.html;
-    //           Alpine.store('cart').count = res.data.count
-    //         })
-    //       } catch (error) {
-    //         console.error(error)
-    //       }
-    //     })
-    //   })
-    // },
-    // Add product to cart
-    add: function add(el) {
+    id: root.dataset.id,
+    buttonBuyAction: '',
+    buttonBuyText: '',
+    buttonBuyDisabled: false,
+    // Add, update or remove product
+    buttonBuyCallback: function buttonBuyCallback() {
+      if (this.buttonBuyAction === 'buy') this.addToCart();
+      if (this.buttonBuyAction === 'remove') this.removeFromCart();
+    },
+    // Add product to cart or update
+    addToCart: function addToCart() {
+      var _this = this;
+
+      this.cartAjax('/cart').then(function (res) {
+        _this.buttonBuyAction = 'remove';
+        _this.buttonBuyText = 'Убрать';
+      })["catch"](function (err) {
+        return console.error(err);
+      });
+    },
+    // Remove product from cart
+    removeFromCart: function removeFromCart() {
+      var _this2 = this;
+
+      this.cartAjax('/cart-remove').then(function (res) {
+        _this2.buttonBuyAction = 'buy';
+        _this2.buttonBuyText = 'В корзину';
+      })["catch"](function (err) {
+        return console.error(err);
+      });
+    },
+    cartAjax: function cartAjax(url) {
+      var _this3 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                id = el.closest('.product-card[data-id]').dataset.id;
-                _context.prev = 1;
-                _context.next = 4;
-                return axios.post('/cart', {
-                  id: id
+                _this3.buttonBuyDisabled = true;
+                _context.next = 3;
+                return axios.post(url, {
+                  id: _this3.id
                 }).then(function (res) {
                   // Alpine.store('products').headerCart = res.data.html;
                   Alpine.store('cart').count = res.data.count;
+                  Alpine.store('cart').subTotal = res.data.subTotal;
+                })["finally"](function () {
+                  _this3.buttonBuyDisabled = false;
                 });
 
+              case 3:
+                return _context.abrupt("return", _context.sent);
+
               case 4:
-                _context.next = 9;
-                break;
-
-              case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](1);
-                console.error(_context.t0);
-
-              case 9:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 6]]);
+        }, _callee);
       }))();
     }
   };

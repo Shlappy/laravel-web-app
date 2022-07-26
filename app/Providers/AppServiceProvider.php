@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
     Blade::directive('price', function ($expression) {
-      return "<?php echo format_price($expression); ?>";
+      return "<?php echo json_encode(format_price($expression)); ?>";
     });
   }
 }

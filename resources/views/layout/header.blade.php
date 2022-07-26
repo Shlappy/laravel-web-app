@@ -5,6 +5,7 @@
     document.addEventListener('alpine:init', () => {
       Alpine.store('cart', {
         count: {{ Cart::getTotalQuantity() }},
+        subTotal: @price(Cart::getSubTotal()),
       })
     })
   </script>

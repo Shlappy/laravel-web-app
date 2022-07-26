@@ -1,18 +1,6 @@
-@php
-    $inBasket = Cart::has($product->id);
-    $buttonText = $inBasket ? 'Убрать' : 'В корзину';
-    $buttonAction = $inBasket ? 'remove' : 'buy';
-@endphp
-
-<div class="product-card" data-id="{{ $product->id }}" x-data="product">
+<div class="product-card" data-id="{{ $product->id }}" x-data="product($el)">
     <div class="product-card__elements">
-        <x-general.button 
-            class="button__buy product-card__buy" 
-            data-action="{{ $buttonAction }}"
-            x-on:click=""
-            >
-            {{ $buttonText }}
-        </x-general.button>
+        <x-product.button-buy></x-product.button-buy>
         <x-general.button class="button__bg button__bg--copy" type="round" div="true"></x-general.button>
         <x-general.button class="button__bg button__bg--heart" type="round" div="true"></x-general.button>
     </div>

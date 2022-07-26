@@ -32,8 +32,8 @@ Route::controller(ProductController::class)->group(function () {
 Route::controller(CartController::class)->group(function () {
     Route::get('cart', 'index')->name('cart.list');
     Route::post('cart', 'addToCart')->name('cart.store');
-    Route::patch('update-cart', 'updateCart')->name('cart.update');
-    Route::post('remove', 'removeCart')->name('cart.remove');
+    Route::post('update-cart', 'updateCart')->name('cart.update');
+    Route::post('cart-remove', 'removeFromCart')->name('cart.remove');
     Route::post('clear-cart', 'clearAllCart')->name('cart.clear');
 });
 

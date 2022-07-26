@@ -2,13 +2,23 @@
   &__link {
     position: relative;
     cursor: pointer;
-    width: 30px;
     height: 100%;
     margin-right: 25px;
-    background: no-repeat center/contain url("@{images}icons/shopping-cart.svg");
-    color: transparent;
 
-    &::before {
+    a {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__icon {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+
+    &::after {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -21,8 +31,42 @@
       height: 23px;
       font-size: 14px;
       padding: 5px;
-      right: -15px;
-      top: 5px;
+      left: 15px;
+      top: -8px;
+      z-index: 1;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      background: no-repeat center/contain url("@{images}icons/shopping-cart.svg");
+      width: 30px;
+      height: 30px;
+      left: 0;
+    }
+  }
+
+  &-modal {
+    &__body {
+      width: 500px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 2px 3px 12px #00000025;
+      padding: 25px 15px;
+    }
+
+    &__header {
+      margin-bottom: 10px;
+    }
+
+    &__header-title {
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
     }
   }
 }

@@ -17,14 +17,7 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        if (Cart::has($request->id)) {
-            $this->updateCart($request);
-
-            return response()->json([
-                'count' => Cart::getTotalQuantity(),
-                'id' => $request->id
-            ]);
-        }
+        if (Cart::has($request->id)) return $this->updateCart($request);
 
         $product = Product::findOrFail($request->id);
 
@@ -38,11 +31,7 @@ class CartController extends Controller
             ]
         ]);
 
-        return response()->json([
-            'count' => Cart::getTotalQuantity(),
-            'id' => $request->id
-        ]);
-        // return redirect()->route('cart.list');
+        return $this->ajaxCartResponse();
     }
 
     public function updateCart(Request $request)
@@ -57,32 +46,33 @@ class CartController extends Controller
             ]
         );
 
-        session()->flash('success', 'Item cart has been updated successfully');
+        session()->flash('success', 'Товар успешно добавлен в корзину');
 
-        return response()->json([
-            'count' => Cart::getTotalQuantity()
-        ]);
-        // return redirect()->route('cart.list');
+        return $this->ajaxCartResponse();
     }
 
-    public function removeCart(Request $request)
+    public function removeFromCart(Request $request)
     {
         Cart::remove($request->id);
-        session()->flash('success', 'Item cart has been removed successfully');
+        session()->flash('success', 'Товар успешно удалён из корзины');
 
-        return response()->json([
-            'count' => Cart::getTotalQuantity()
-        ]);
+        return $this->ajaxCartResponse();
     }
 
     public function clearAllCart()
     {
         Cart::clear();
 
-        session()->flash('success', 'All Item Cart Clear Successfully !');
+        session()->flash('success', 'Корзина успешно очищена');
 
+        return $this->ajaxCartResponse();
+    }
+
+    protected function ajaxCartResponse()
+    {
         return response()->json([
-            'count' => Cart::getTotalQuantity()
+            'count' => Cart::getTotalQuantity(),
+            'subTotal' => format_price(Cart::getSubTotal()),
         ]);
     }
 }
