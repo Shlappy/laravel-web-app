@@ -1,0 +1,8 @@
+Dev:
+  1. Убрать category_id в filter
+  2. Перенести логику из контроллеров в другие классы
+  3. Alpine.store('products') в файл
+  4. Storage для cart (т. к. в сессии данные хранятся совсем недолго)
+
+Prod:
+  1. Enable css and js caching in app.blade.php

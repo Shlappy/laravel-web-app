@@ -5105,8 +5105,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.cartAjax('/cart').then(function (res) {
         _this.buttonBuyAction = 'remove';
         _this.buttonBuyText = 'Убрать';
-      })["catch"](function (err) {
-        return console.error(err);
       });
     },
     // Remove product from cart
@@ -5116,8 +5114,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.cartAjax('/cart-remove').then(function (res) {
         _this2.buttonBuyAction = 'buy';
         _this2.buttonBuyText = 'В корзину';
-      })["catch"](function (err) {
-        return console.error(err);
       });
     },
     cartAjax: function cartAjax(url) {
@@ -5133,9 +5129,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.post(url, {
                   id: _this3.id
                 }).then(function (res) {
-                  // Alpine.store('products').headerCart = res.data.html;
                   Alpine.store('cart').count = res.data.count;
                   Alpine.store('cart').subTotal = res.data.subTotal;
+                  Alpine.store('cart').list = res.data.list;
+                })["catch"](function (err) {
+                  return console.error(err);
                 })["finally"](function () {
                   _this3.buttonBuyDisabled = false;
                 });

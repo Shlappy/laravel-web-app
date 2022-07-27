@@ -40,14 +40,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Cart page
-     */
-    public function showCart()
-    {
-        return view('pages.products.cart');
-    }
-
-    /**
      * Get products with the selected filters
      */
     public function getProducts(Request $request, Category $category)
@@ -55,6 +47,7 @@ class ProductController extends Controller
         $filters = $request->filters;
 
         // Retrieve all products
+        // todo: remove and return nothing in such case
         if (!$filters) {
             $products = Product::whereBelongsTo($category)->paginate(12);
 

@@ -28,7 +28,8 @@ class CartController extends Controller
             'quantity' => 1,
             'attributes' => [
                 'image' => $product->image,
-            ]
+            ],
+            'associatedModel' => 'Product'
         ]);
 
         return $this->ajaxCartResponse();
@@ -72,7 +73,8 @@ class CartController extends Controller
     {
         return response()->json([
             'count' => Cart::getTotalQuantity(),
-            'subTotal' => format_price(Cart::getSubTotal()),
+            'subTotal' => format_price(Cart::getTotal()),
+            'list' => Cart::getContentForOutput(),
         ]);
     }
 }

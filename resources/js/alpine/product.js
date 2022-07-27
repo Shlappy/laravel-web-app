@@ -17,7 +17,6 @@ export default (root = null) => ({
         this.buttonBuyAction = 'remove';
         this.buttonBuyText = 'Убрать';
       })
-      .catch((err) => console.error(err))
   },
 
   // Remove product from cart
@@ -27,17 +26,17 @@ export default (root = null) => ({
         this.buttonBuyAction = 'buy';
         this.buttonBuyText = 'В корзину';
       })
-      .catch((err) => console.error(err))
   },
 
   async cartAjax(url) {
     this.buttonBuyDisabled = true;
     return await axios.post(url, { id: this.id })
       .then((res) => {
-        // Alpine.store('products').headerCart = res.data.html;
         Alpine.store('cart').count = res.data.count;
         Alpine.store('cart').subTotal = res.data.subTotal;
+        Alpine.store('cart').list = res.data.list;
       })
+      .catch((err) => console.error(err))
       .finally(() => {
         this.buttonBuyDisabled = false;
       })
