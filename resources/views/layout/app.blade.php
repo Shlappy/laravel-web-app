@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>eCommerce Showcase</title>
@@ -19,6 +19,9 @@
   {{ $slot }}
 
   <x-modals></x-modals>
+
+  @include ('layout.footer')
+  
   <script src="{{ asset('js/app.js') }}?{{ time() }}"></script>
 </body>
 

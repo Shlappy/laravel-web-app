@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product;
+use DB;
 
 class Filter extends Model
 {
@@ -24,5 +24,14 @@ class Filter extends Model
     public function category()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function getFiltersForCategory(Category $category)
+    {
+        return DB::table('filters', 'f')
+        ->join('filter_specs as s', 'f.specs_id', '=', 's.id')
+        ->where('f.category_id', '=', $category->id)
+        ->select('f.value', 'f.code', 's.name', 's.type', 's.slug')
+        ->get();
     }
 }

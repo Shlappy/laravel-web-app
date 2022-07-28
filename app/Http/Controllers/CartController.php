@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 use Cart;
 
 class CartController extends Controller
@@ -15,56 +14,40 @@ class CartController extends Controller
         return view('pages.cart.index', compact('cartItems'));
     }
 
-    public function addToCart(Request $request)
+    public function store(Request $request)
     {
-        if (Cart::has($request->id)) return $this->updateCart($request);
+        if (Cart::has($request->id)) return $this->update($request);
 
-        $product = Product::findOrFail($request->id);
+        Cart::addFromRequest($request);
 
-        Cart::add([
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => 1,
-            'attributes' => [
-                'image' => $product->image,
-            ],
-            'associatedModel' => 'Product'
-        ]);
+        session()->flash('success', __('cart.added'));
 
         return $this->ajaxCartResponse();
     }
 
-    public function updateCart(Request $request)
+    public function update(Request $request)
     {
-        Cart::update(
-            $request->id,
-            [
-                'quantity' => [
-                    'relative' => false,
-                    'value' => 1
-                ],
-            ]
-        );
+        Cart::updateFromRequest($request);
 
-        session()->flash('success', 'Товар успешно добавлен в корзину');
+        session()->flash('success', __('cart.added'));
 
         return $this->ajaxCartResponse();
     }
 
-    public function removeFromCart(Request $request)
+    public function remove(Request $request)
     {
         Cart::remove($request->id);
-        session()->flash('success', 'Товар успешно удалён из корзины');
+
+        session()->flash('success', __('cart.removed'));
 
         return $this->ajaxCartResponse();
     }
 
-    public function clearAllCart()
+    public function clear()
     {
         Cart::clear();
 
-        session()->flash('success', 'Корзина успешно очищена');
+        session()->flash('success', __('cart.cleared'));
 
         return $this->ajaxCartResponse();
     }

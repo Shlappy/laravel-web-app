@@ -31,10 +31,10 @@ Route::controller(ProductController::class)->group(function () {
 
 Route::controller(CartController::class)->group(function () {
     Route::get('cart', 'index')->name('cart.list');
-    Route::post('cart', 'addToCart')->name('cart.store');
-    Route::post('update-cart', 'updateCart')->name('cart.update');
-    Route::post('cart-remove', 'removeFromCart')->name('cart.remove');
-    Route::post('clear-cart', 'clearAllCart')->name('cart.clear');
+    Route::post('cart', 'store')->name('cart.store');
+    Route::post('update-cart', 'update')->name('cart.update');
+    Route::post('cart-remove', 'remove')->name('cart.remove');
+    Route::post('cart-clear', 'clear')->name('cart.clear');
 });
 
 Route::get('user/{user:id}', [UserController::class, 'show'])->name('account');

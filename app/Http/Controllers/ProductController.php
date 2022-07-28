@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Filter;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
@@ -10,23 +11,29 @@ use DB;
 class ProductController extends Controller
 {
     /**
+     * The filter instance.
+     */
+    protected $filters;
+
+    public function __construct(Filter $filters)
+    {
+        $this->filters = $filters;
+    }
+
+    /**
      * Category products page
+     * 
+     * todo: put AJAX response into separate function
      */
     public function index(Request $request, Category $category)
     {
         $products = Product::whereBelongsTo($category)->paginate(12);
 
         if ($request->ajax() || $request->isJson()) {
-            return response()->json(
-                view('components.product.product-list', compact('products'))->render()
-            );
+            return response()->json(['products' => $products]);
         }
 
-        $filters = DB::table('filters', 'f')
-            ->join('filter_specs as s', 'f.specs_id', '=', 's.id')
-            ->where('f.category_id', '=', $category->id)
-            ->select('f.value', 'f.code', 's.name', 's.type', 's.slug')
-            ->get();
+        $filters = $this->filters->getFiltersForCategory($category);
 
         return view('pages.products.category-products', compact(['filters', 'products']));
     }
@@ -53,9 +60,7 @@ class ProductController extends Controller
 
             if ($products->isEmpty()) return json_encode(['Товаров в данной категории нет']);
 
-            return response()->json(
-                view('components.product.product-list', compact('products'))->render()
-            );
+            return response()->json(['products' => $products]);
         }
 
         $specs = [];
@@ -105,8 +110,6 @@ class ProductController extends Controller
 
         if ($products->isEmpty()) return json_encode(['Товары с такими фильтрами не найдены']);
 
-        return response()->json(
-            view('components.product.product-list', compact('products'))->render()
-        );
+        return response()->json(['products' => $products]);
     }
 }

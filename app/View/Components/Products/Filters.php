@@ -31,8 +31,6 @@ class Filters extends Component
   /**
    * Prepare filters for output to a component
    * 
-   * todo: make it more oop friendly if needed...
-   * 
    * @param Collection $filters Raw filters
    */
   protected function prepareFilters($filters)

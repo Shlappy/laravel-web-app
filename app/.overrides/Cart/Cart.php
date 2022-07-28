@@ -1,10 +1,13 @@
-<?php namespace Darryldecode\Cart;
+<?php
+
+namespace Darryldecode\Cart;
 
 use Darryldecode\Cart\Exceptions\InvalidConditionException;
 use Darryldecode\Cart\Exceptions\InvalidItemException;
 use Darryldecode\Cart\Helpers\Helpers;
 use Darryldecode\Cart\Validators\CartItemValidator;
 use Darryldecode\Cart\Exceptions\UnknownModelException;
+use Illuminate\Http\Request;
 
 /**
  * Class Cart
@@ -221,6 +224,27 @@ class Cart
         return $this;
     }
 
+    // OVERRIDE
+    /**
+     * extract data from request and add to cart
+     */
+    public function addFromRequest(Request $request)
+    {
+        $product = \App\Models\Product::findOrFail($request->id);
+
+        $this->add([
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => 1,
+            'attributes' => [
+                'image' => $product->image,
+            ],
+            'associatedModel' => 'Product'
+        ]);
+    }
+    // END OVERRIDE
+
     /**
      * update a cart
      *
@@ -276,6 +300,24 @@ class Cart
         $this->fireEvent('updated', $item);
         return true;
     }
+
+    // OVERRIDE
+    /**
+     * extract data from request and update cart
+     */
+    public function updateFromRequest(Request $request)
+    {
+        $this->update(
+            $request->id,
+            [
+                'quantity' => [
+                    'relative' => false,
+                    'value' => 1
+                ],
+            ]
+        );
+    }
+    // END OVERRIDE
 
     /**
      * add condition on an existing item on the cart
@@ -672,8 +714,8 @@ class Cart
      */
     public function getContent()
     {
-        return (new CartCollection($this->session->get($this->sessionKeyCartItems)))->reject(function($item) {
-            return ! ($item instanceof ItemCollection);
+        return (new CartCollection($this->session->get($this->sessionKeyCartItems)))->reject(function ($item) {
+            return !($item instanceof ItemCollection);
         });
     }
 
@@ -685,10 +727,14 @@ class Cart
      */
     public function getContentForOutput()
     {
-        return $this->getContent()->transform(function($product, $id) {
-            $product->price = 2222;
-            $product->name = 'ddd';
-            return $product;
+        return $this->getContent()->map(function ($product, $id) {
+            return collect([
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => format_price($product->price),
+                'quantity' => $product->quantity,
+                'attributes' => $product->attributes,
+            ]);
         });
     }
     // END OVERRIDE
