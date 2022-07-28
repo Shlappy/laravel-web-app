@@ -6,12 +6,10 @@ var optionChange = new Event('optionChange', {
 });
 
 Alpine.store('products', {
-  // html: {{ Js::from(view('components.product.product-list', compact('products'))->render()) }},
-  // headerCart: '', // delete
-  list : [],
+  list : app.products,
+  pagination: app.pagination,
   filterElements: [],
   affectedFilters: [],
-  ajaxButtons: [],
 
   init() {
     this.filterElements = document.querySelectorAll('#filters .filter-item');
@@ -43,24 +41,27 @@ Alpine.store('products', {
 
     if (this.affectedFilters.length && !all) filters = this.applyFilters();
 
+    const ajaxButtons = document.querySelectorAll('.ajax-button');
+
     try {
-      this.ajaxButtons.forEach(e => {
+      ajaxButtons.forEach((e) => {
         e.setAttribute('disabled', 'disabled');
+        e.classList.add('disabled');
       });
 
-      await axios.post(url, {
-        filters
-      })
+      await axios.post(url, {filters})
         .then(response => {
           this.list = response.data.products;
+          this.pagination = response.data.pagination;
         });
 
       scrollToTop();
     } catch (error) {
       console.error(error);
     } finally {
-      this.ajaxButtons.forEach(e => {
+      ajaxButtons.forEach(e => {
         e.removeAttribute('disabled');
+        e.classList.remove('disabled');
       });
     }
   },
@@ -123,5 +124,5 @@ Alpine.store('products', {
     });
 
     return filtersData;
-  },
+  }
 });

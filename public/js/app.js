@@ -5195,12 +5195,10 @@ var optionChange = new Event('optionChange', {
   bubbles: true
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
-  // html: {{ Js::from(view('components.product.product-list', compact('products'))->render()) }},
-  // headerCart: '', // delete
-  list: [],
+  list: app.products,
+  pagination: app.pagination,
   filterElements: [],
   affectedFilters: [],
-  ajaxButtons: [],
   init: function init() {
     var _this = this;
 
@@ -5232,7 +5230,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
         _this2 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var url, all, filters;
+      var url, all, filters, ajaxButtons;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -5241,44 +5239,44 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
               all = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : false;
               filters = [];
               if (_this2.affectedFilters.length && !all) filters = _this2.applyFilters();
-              _context.prev = 4;
-
-              _this2.ajaxButtons.forEach(function (e) {
+              ajaxButtons = document.querySelectorAll('.ajax-button');
+              _context.prev = 5;
+              ajaxButtons.forEach(function (e) {
                 e.setAttribute('disabled', 'disabled');
+                e.classList.add('disabled');
               });
-
-              _context.next = 8;
+              _context.next = 9;
               return axios.post(url, {
                 filters: filters
               }).then(function (response) {
                 _this2.list = response.data.products;
+                _this2.pagination = response.data.pagination;
               });
 
-            case 8:
+            case 9:
               scrollToTop();
-              _context.next = 14;
+              _context.next = 15;
               break;
 
-            case 11:
-              _context.prev = 11;
-              _context.t0 = _context["catch"](4);
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](5);
               console.error(_context.t0);
 
-            case 14:
-              _context.prev = 14;
-
-              _this2.ajaxButtons.forEach(function (e) {
+            case 15:
+              _context.prev = 15;
+              ajaxButtons.forEach(function (e) {
                 e.removeAttribute('disabled');
+                e.classList.remove('disabled');
               });
+              return _context.finish(15);
 
-              return _context.finish(14);
-
-            case 17:
+            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[4, 11, 14, 17]]);
+      }, _callee, null, [[5, 12, 15, 18]]);
     }))();
   },
   // Get all products and reset filter

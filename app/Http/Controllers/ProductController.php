@@ -7,6 +7,7 @@ use App\Models\Filter;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
+use JavaScript;
 
 class ProductController extends Controller
 {
@@ -30,10 +31,20 @@ class ProductController extends Controller
         $products = Product::whereBelongsTo($category)->paginate(12);
 
         if ($request->ajax() || $request->isJson()) {
-            return response()->json(['products' => $products]);
+            return response()->json(
+                [
+                    'products' => $products->all(),
+                    'pagination' => $products->links()->render()
+                ]
+            );
         }
 
         $filters = $this->filters->getFiltersForCategory($category);
+
+        JavaScript::put([
+            'products' => $products->all(),
+            'pagination' => $products->links()->render()
+        ]);
 
         return view('pages.products.category-products', compact(['filters', 'products']));
     }
@@ -60,7 +71,12 @@ class ProductController extends Controller
 
             if ($products->isEmpty()) return json_encode(['Товаров в данной категории нет']);
 
-            return response()->json(['products' => $products]);
+            return response()->json(
+                [
+                    'products' => $products->all(),
+                    'pagination' => $products->links()->render()
+                ]
+            );
         }
 
         $specs = [];
@@ -110,6 +126,11 @@ class ProductController extends Controller
 
         if ($products->isEmpty()) return json_encode(['Товары с такими фильтрами не найдены']);
 
-        return response()->json(['products' => $products]);
+        return response()->json(
+            [
+                'products' => $products->all(),
+                'pagination' => $products->links()->render()
+            ]
+        );
     }
 }
