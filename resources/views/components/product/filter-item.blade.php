@@ -1,4 +1,4 @@
-<div data-name="{{ $filter['slug'] }}" data-type="{{ $filter['type'] }}" class="filter-item" x-data="{ toggle: false }">
+<div data-role="filter" data-name="{{ $filter['slug'] }}" data-type="{{ $filter['type'] }}" class="filter-item" x-data="{ toggle: false }">
   <div class="filter-item__wrapper">
 
     <a 

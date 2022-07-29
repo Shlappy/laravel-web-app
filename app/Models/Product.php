@@ -10,7 +10,7 @@ use App\Models\Filter;
 
 class Product extends Model
 {
-    use HasFactory, Sluggable, \App\Models\Concerns\UsesUuid;
+    use HasFactory, Sluggable, \App\Traits\UsesUuid;
 
     protected $fillable = [
         'name',

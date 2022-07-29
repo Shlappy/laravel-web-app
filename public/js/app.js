@@ -5086,25 +5086,35 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var removeFromCart = 'Убрать';
+var addToCart = 'В корзину';
+var addAction = 'buy';
+var removeAction = 'remove';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var productItem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   return {
-    id: root.dataset.id,
+    root: root,
     buttonBuyAction: '',
     buttonBuyText: '',
     buttonBuyDisabled: false,
+    inCart: productItem.inCart,
+    init: function init() {
+      this.inCart ? this.buttonBuyAction = removeAction : this.buttonBuyAction = addAction;
+      this.inCart ? this.buttonBuyText = removeFromCart : this.buttonBuyText = addToCart;
+    },
     // Add, update or remove product
     buttonBuyCallback: function buttonBuyCallback() {
-      if (this.buttonBuyAction === 'buy') this.addToCart();
-      if (this.buttonBuyAction === 'remove') this.removeFromCart();
+      if (this.buttonBuyAction === addAction) this.addToCart();
+      if (this.buttonBuyAction === removeAction) this.removeFromCart();
     },
     // Add product to cart or update
     addToCart: function addToCart() {
       var _this = this;
 
       this.cartAjax('/cart').then(function (res) {
-        _this.buttonBuyAction = 'remove';
-        _this.buttonBuyText = 'Убрать';
+        _this.buttonBuyAction = removeAction;
+        _this.buttonBuyText = removeFromCart;
       });
     },
     // Remove product from cart
@@ -5112,8 +5122,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       this.cartAjax('/cart-remove').then(function (res) {
-        _this2.buttonBuyAction = 'buy';
-        _this2.buttonBuyText = 'В корзину';
+        _this2.buttonBuyAction = addAction;
+        _this2.buttonBuyText = addToCart;
       });
     },
     cartAjax: function cartAjax(url) {
@@ -5127,7 +5137,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this3.buttonBuyDisabled = true;
                 _context.next = 3;
                 return axios.post(url, {
-                  id: _this3.id
+                  id: _this3.root.dataset.id
                 }).then(function (res) {
                   Alpine.store('cart').count = res.data.count;
                   Alpine.store('cart').subTotal = res.data.subTotal;
@@ -5189,21 +5199,19 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
- // Event to check whether any of the filter elements have been changed
 
-var optionChange = new Event('optionChange', {
-  bubbles: true
-});
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
   list: app.products,
   pagination: app.pagination,
   filterElements: [],
   affectedFilters: [],
+  responseMessage: '',
+  responseStatus: '',
   init: function init() {
     var _this = this;
 
-    this.filterElements = document.querySelectorAll('#filters .filter-item');
-    var elements = document.querySelectorAll('#filters .filter-item input');
+    this.filterElements = document.querySelectorAll('#filters [data-role="filter"]');
+    var elements = document.querySelectorAll('#filters [data-role="filter"] input');
     this.filterElements.forEach(function (filterEl) {
       filterEl.addEventListener('optionChange', function (e) {
         if (filterEl.getAttribute('data-type') === 'checkbox' && !filterEl.querySelectorAll('input:checked').length) {
@@ -5230,7 +5238,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
         _this2 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var url, all, filters, ajaxButtons;
+      var url, all, filters;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -5239,44 +5247,51 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
               all = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : false;
               filters = [];
               if (_this2.affectedFilters.length && !all) filters = _this2.applyFilters();
-              ajaxButtons = document.querySelectorAll('.ajax-button');
-              _context.prev = 5;
-              ajaxButtons.forEach(function (e) {
-                e.setAttribute('disabled', 'disabled');
-                e.classList.add('disabled');
-              });
-              _context.next = 9;
+              _context.prev = 4;
+
+              _this2.disableButtons();
+
+              _context.next = 8;
               return axios.post(url, {
                 filters: filters
               }).then(function (response) {
+                if (response.data.status === 'empty') {
+                  _this2.list = null;
+                  _this2.pagination = null;
+                  _this2.responseStatus = response.data.status;
+                  _this2.responseMessage = response.data.message;
+                  return;
+                }
+
                 _this2.list = response.data.products;
                 _this2.pagination = response.data.pagination;
+                _this2.responseStatus = response.data.status;
+                _this2.responseMessage = response.data.message;
               });
 
-            case 9:
+            case 8:
               scrollToTop();
-              _context.next = 15;
+              _context.next = 14;
               break;
 
-            case 12:
-              _context.prev = 12;
-              _context.t0 = _context["catch"](5);
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](4);
               console.error(_context.t0);
 
-            case 15:
-              _context.prev = 15;
-              ajaxButtons.forEach(function (e) {
-                e.removeAttribute('disabled');
-                e.classList.remove('disabled');
-              });
-              return _context.finish(15);
+            case 14:
+              _context.prev = 14;
 
-            case 18:
+              _this2.disableButtons(false);
+
+              return _context.finish(14);
+
+            case 17:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[5, 12, 15, 18]]);
+      }, _callee, null, [[4, 11, 14, 17]]);
     }))();
   },
   // Get all products and reset filter
@@ -5334,6 +5349,20 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('products', {
       filtersData.push(data);
     });
     return filtersData;
+  },
+  // Disable buttons while AJAX calls
+  disableButtons: function disableButtons() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    var ajaxButtons = document.querySelectorAll('.ajax-button');
+    ajaxButtons.forEach(function (e) {
+      if (state) {
+        e.setAttribute('disabled', 'disabled');
+        e.classList.add('disabled');
+      } else {
+        e.removeAttribute('disabled');
+        e.classList.remove('disabled');
+      }
+    });
   }
 });
 
@@ -5382,6 +5411,19 @@ window.noUiSlider = __webpack_require__(/*! nouislider */ "./node_modules/nouisl
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/events.js":
+/*!********************************!*\
+  !*** ./resources/js/events.js ***!
+  \********************************/
+/***/ (() => {
+
+// Event to check whether any of the filter elements have been changed
+window.optionChange = new Event('optionChange', {
+  bubbles: true
+});
 
 /***/ }),
 
@@ -25233,20 +25275,23 @@ var __webpack_exports__ = {};
   \*****************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _alpine_data_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alpine/data/product */ "./resources/js/alpine/data/product.js");
-/* harmony import */ var _alpine_store_cart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alpine/store/cart */ "./resources/js/alpine/store/cart.js");
-/* harmony import */ var _alpine_store_products__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./alpine/store/products */ "./resources/js/alpine/store/products.js");
-/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main */ "./resources/js/main.js");
-/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_main__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./events */ "./resources/js/events.js");
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_events__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _alpine_data_product__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alpine/data/product */ "./resources/js/alpine/data/product.js");
+/* harmony import */ var _alpine_store_cart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./alpine/store/cart */ "./resources/js/alpine/store/cart.js");
+/* harmony import */ var _alpine_store_products__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./alpine/store/products */ "./resources/js/alpine/store/products.js");
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main */ "./resources/js/main.js");
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_main__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].data('product', _alpine_data_product__WEBPACK_IMPORTED_MODULE_2__["default"]);
-alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start(); // Main app scripts
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].data('product', _alpine_data_product__WEBPACK_IMPORTED_MODULE_3__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start(); // Main app scripts
 
 
 })();

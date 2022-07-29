@@ -7,7 +7,9 @@ use App\Models\Filter;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
+use Common;
 use JavaScript;
+use Cart;
 
 class ProductController extends Controller
 {
@@ -24,25 +26,20 @@ class ProductController extends Controller
     /**
      * Category products page
      * 
-     * todo: put AJAX response into separate function
+     * todo: put AJAX response into a separate function
      */
     public function index(Request $request, Category $category)
     {
         $products = Product::whereBelongsTo($category)->paginate(12);
 
         if ($request->ajax() || $request->isJson()) {
-            return response()->json(
-                [
-                    'products' => $products->all(),
-                    'pagination' => $products->links()->render()
-                ]
-            );
+            return $this->productsResponse($products, Common::SUCCESS);
         }
 
         $filters = $this->filters->getFiltersForCategory($category);
 
         JavaScript::put([
-            'products' => $products->all(),
+            'products' => $this->productsInCart($products)->all(),
             'pagination' => $products->links()->render()
         ]);
 
@@ -59,6 +56,8 @@ class ProductController extends Controller
 
     /**
      * Get products with the selected filters
+     * 
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getProducts(Request $request, Category $category)
     {
@@ -69,14 +68,11 @@ class ProductController extends Controller
         if (!$filters) {
             $products = Product::whereBelongsTo($category)->paginate(12);
 
-            if ($products->isEmpty()) return json_encode(['Товаров в данной категории нет']);
-
-            return response()->json(
-                [
-                    'products' => $products->all(),
-                    'pagination' => $products->links()->render()
-                ]
-            );
+            if ($products->isEmpty()) {
+                return $this->productsResponse($products, Common::NO_PRODUCTS, __('product.empty'));
+            }
+            
+            return $this->productsResponse($products, Common::SUCCESS);
         }
 
         $specs = [];
@@ -124,13 +120,49 @@ class ProductController extends Controller
             ->having('count', '=', count($filters))
             ->paginate(12);
 
-        if ($products->isEmpty()) return json_encode(['Товары с такими фильтрами не найдены']);
+        if ($products->isEmpty()) {
+            return $this->productsResponse(status: Common::NO_PRODUCTS, message: __('product.emptyFilters'));
+        }
 
-        return response()->json(
-            [
-                'products' => $products->all(),
-                'pagination' => $products->links()->render()
-            ]
-        );
+        return $this->productsResponse(products: $products, status: Common::SUCCESS);
+    }
+
+    /**
+     * Response for an AJAX call
+     * 
+     * @param mixed $products Products to form a response from
+     * @param mixed $status Response status
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function productsResponse($products = [], $status = '', $message = '')
+    {
+        $data = ['status' => $status];
+
+        if ($products) {
+            $data['products'] = $this->productsInCart($products)->all();
+            $data['pagination'] = $products->links()->render();
+        }
+
+        if ($message) {
+            $data['message'] = $message;
+        }
+
+        return response()->json($data);
+    }
+
+    /**
+     * Check whether product is in cart or not
+     * 
+     * @param \Illuminate\Support\Collection|\Illuminate\Pagination\LengthAwarePaginator $products
+     * 
+     * @return \Illuminate\Support\Collection
+     */
+    public function productsInCart($products)
+    {
+        return $products->transform(function($product, $index) {
+            $product->inCart = Cart::has($product->id);
+            return $product;
+        });
     }
 }

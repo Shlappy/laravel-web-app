@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Cart;
 
 class CartController extends Controller
 {
+    /**
+     * The product instance.
+     */
+    protected $product;
+
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
     public function index()
     {
         $cartItems = Cart::getContent();
@@ -52,6 +63,11 @@ class CartController extends Controller
         return $this->ajaxCartResponse();
     }
 
+    /**
+     * Response for an AJAX call
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function ajaxCartResponse()
     {
         return response()->json([

@@ -1,19 +1,16 @@
 import Alpine from 'alpinejs'
 
-// Event to check whether any of the filter elements have been changed
-var optionChange = new Event('optionChange', {
-  bubbles: true
-});
-
 Alpine.store('products', {
-  list : app.products,
+  list: app.products,
   pagination: app.pagination,
   filterElements: [],
   affectedFilters: [],
+  responseMessage: '',
+  responseStatus: '',
 
   init() {
-    this.filterElements = document.querySelectorAll('#filters .filter-item');
-    let elements = document.querySelectorAll('#filters .filter-item input');
+    this.filterElements = document.querySelectorAll('#filters [data-role="filter"]');
+    let elements = document.querySelectorAll('#filters [data-role="filter"] input');
 
     this.filterElements.forEach(filterEl => {
       filterEl.addEventListener('optionChange', (e) => {
@@ -41,28 +38,30 @@ Alpine.store('products', {
 
     if (this.affectedFilters.length && !all) filters = this.applyFilters();
 
-    const ajaxButtons = document.querySelectorAll('.ajax-button');
-
     try {
-      ajaxButtons.forEach((e) => {
-        e.setAttribute('disabled', 'disabled');
-        e.classList.add('disabled');
-      });
+      this.disableButtons();
 
-      await axios.post(url, {filters})
+      await axios.post(url, { filters })
         .then(response => {
+          if (response.data.status === 'empty') {
+            this.list = null;
+            this.pagination = null;
+            this.responseStatus = response.data.status;
+            this.responseMessage = response.data.message;
+            return;
+          }
+
           this.list = response.data.products;
           this.pagination = response.data.pagination;
+          this.responseStatus = response.data.status;
+          this.responseMessage = response.data.message;
         });
 
       scrollToTop();
     } catch (error) {
       console.error(error);
     } finally {
-      ajaxButtons.forEach(e => {
-        e.removeAttribute('disabled');
-        e.classList.remove('disabled');
-      });
+      this.disableButtons(false);
     }
   },
 
@@ -124,5 +123,20 @@ Alpine.store('products', {
     });
 
     return filtersData;
-  }
+  },
+
+  // Disable buttons while AJAX calls
+  disableButtons(state = true) {
+    const ajaxButtons = document.querySelectorAll('.ajax-button');
+
+    ajaxButtons.forEach((e) => {
+      if (state) {
+        e.setAttribute('disabled', 'disabled');
+        e.classList.add('disabled');
+      } else {
+        e.removeAttribute('disabled');
+        e.classList.remove('disabled');
+      }
+    });
+  },
 });

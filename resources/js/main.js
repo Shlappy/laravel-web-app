@@ -67,7 +67,6 @@ window.scrollToTop = function (pos = 0) {
   });
 }
 
-
 window.addEventListener('DOMContentLoaded', (event) => {
   collapsible();
   sliders();

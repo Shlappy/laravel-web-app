@@ -29,12 +29,12 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('product/{product:slug}', 'show')->name('products.show');
 });
 
-Route::controller(CartController::class)->group(function () {
-    Route::get('cart', 'index')->name('cart.list');
-    Route::post('cart', 'store')->name('cart.store');
-    Route::post('update-cart', 'update')->name('cart.update');
-    Route::post('cart-remove', 'remove')->name('cart.remove');
-    Route::post('cart-clear', 'clear')->name('cart.clear');
+Route::controller(CartController::class)->name('cart.')->group(function () {
+    Route::get('cart', 'index')->name('list');
+    Route::post('cart', 'store')->name('store');
+    Route::post('update-cart', 'update')->name('update');
+    Route::post('cart-remove', 'remove')->name('remove');
+    Route::post('cart-clear', 'clear')->name('clear');
 });
 
 Route::get('user/{user:id}', [UserController::class, 'show'])->name('account');

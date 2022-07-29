@@ -21,7 +21,6 @@ class CategoryController extends Controller
 
   public function show(Request $request, Category $category)
   {
-    // dd($category->products->all());
     return view('pages.categories.index');
   }
 }

@@ -1,4 +1,4 @@
-<div class="product-card" :data-id="productItem.id" x-data="product($el)">
+<div class="product-card" :data-id="productItem.id" x-data="product($el, productItem)">
     <div class="product-card__elements">
         <x-product.button-buy></x-product.button-buy>
         <x-general.button class="button__bg button__bg--copy" type="round" div="true"></x-general.button>
@@ -6,8 +6,10 @@
     </div>
     <a href="#">
         <div class="product-card__upper">
-            <div class="product-card__image">
-            </div>
+            <template x-if="productItem.images">
+                <div class="product-card__image">
+                </div>
+            </template>
         </div>
         <div class="product-card__bottom">
             <div class="product-card__name" x-text="productItem.name"></div>

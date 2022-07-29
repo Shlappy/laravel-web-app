@@ -1,5 +1,6 @@
 import './bootstrap';
 
+import './events';
 import Alpine from 'alpinejs';
 import product from './alpine/data/product';
 import './alpine/store/cart';
