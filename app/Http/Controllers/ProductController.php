@@ -55,6 +55,10 @@ class ProductController extends Controller
     }
 
     /**
+     * PUT DB CODE INTO SERVICE CLASS
+     * PUT DB CODE INTO SERVICE CLASS
+     * PUT DB CODE INTO SERVICE CLASS
+     * PUT DB CODE INTO SERVICE CLASS
      * Get products with the selected filters
      * 
      * @return \Illuminate\Http\JsonResponse
@@ -128,6 +132,11 @@ class ProductController extends Controller
     }
 
     /**
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES   
      * Response for an AJAX call
      * 
      * @param mixed $products Products to form a response from
@@ -152,6 +161,11 @@ class ProductController extends Controller
     }
 
     /**
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES
+     * REMAKE WITH RESOURCES   
      * Check whether product is in cart or not
      * 
      * @param \Illuminate\Support\Collection|\Illuminate\Pagination\LengthAwarePaginator $products
