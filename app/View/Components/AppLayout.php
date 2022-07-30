@@ -15,12 +15,6 @@ class AppLayout extends Component
    */
   public function render()
   {
-    JavaScript::put([
-      'cartCount' => Cart::getTotalQuantity(),
-      'cartSubTotal' => format_price(Cart::getTotal()),
-      'cartList' => Cart::getContentForOutput(),
-    ]);
-
     return view('layout.app');
   }
 }

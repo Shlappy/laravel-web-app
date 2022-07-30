@@ -6,7 +6,7 @@
                     {!! __('pagination.previous') !!}
                 </span>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" class="ajax-button" @click.prevent="$store.products.get($el.href)">
+                <a href="{{ $paginator->previousPageUrl() }}" class="ajax-button">
                     {!! __('pagination.previous') !!}
                 </a>
             @endif
@@ -30,7 +30,7 @@
                                         <span class="">{{ $page }}</span>
                                     </span>
                                 @else
-                                    <a href="{{ $url }}" class="ajax-button" @click.prevent="$store.products.get($el.href)">
+                                    <a href="{{ $url }}" class="ajax-button">
                                         {{ $page }}
                                     </a>
                                 @endif
@@ -41,7 +41,7 @@
             </div>
             
             @if ($paginator->hasMorePages())
-                <a href="{{ $paginator->nextPageUrl() }}" class="ajax-button" @click.prevent="$store.products.get($el.href)">
+                <a href="{{ $paginator->nextPageUrl() }}" class="ajax-button">
                     {!! __('pagination.next') !!}
                 </a>
             @else

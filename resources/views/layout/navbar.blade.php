@@ -20,9 +20,9 @@
             class="cart__link" 
             id="cart-link" 
             >
-            <span class="cart__icon" x-bind:data-count="$store.cart.count"></span>
+            <span class="cart__icon"></span>
             <div class="cart__header-total">
-                <span class="cart__header-price" x-text="$store.cart.subTotal"></span>
+                <span class="cart__header-price"></span>
                 <span>₽</span>
             </div>
         </x-layout.navbar-item>
@@ -35,14 +35,14 @@
 
     </ul>
 
-    <div class="menu__mobile" @click="toggleMenu = true">
+    <div class="menu__mobile">
         <x-layout.navbar-hamburger></x-layout.navbar-hamburger>
         <span>Menu</span>
     </div>
 </nav>
 
 <!-- Nav -->
-<nav class="menu menu__main--mobile" :class="toggleMenu && 'active'">
+<nav class="menu menu__main--mobile">
     <div class="close-menu" @click.stop="toggleMenu = false"></div>
     <ul class="menu__list menu__list--mobile">
         @foreach ($navbarItems as $item)

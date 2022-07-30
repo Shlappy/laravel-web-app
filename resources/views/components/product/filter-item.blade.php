@@ -1,15 +1,14 @@
-<div data-role="filter" data-name="{{ $filter['slug'] }}" data-type="{{ $filter['type'] }}" class="filter-item" x-data="{ toggle: false }">
+<div data-role="filter" data-name="{{ $filter['slug'] }}" data-type="{{ $filter['type'] }}" class="filter-item">
   <div class="filter-item__wrapper">
 
     <a 
-      @click.prevent="toggle = !toggle"
       {{ $attributes->class(['filter-item__toggle', 'collapsible', 'filter-item__toggle--between' => $type === 'between', 'pd']) }} 
       href="#"
     >
       {{ $filter['name'] }}
     </a>
 
-    <div class="filter-item__inner" :class="toggle || 'filter-hidden'">
+    <div class="filter-item__inner">
       <div class="filter-item__content">
 
         @if ($type === 'between')

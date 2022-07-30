@@ -1,3 +1,3 @@
-<header class="header" x-data="{ toggleMenu: false }">
+<header class="header">
   <x-layout.navbar></x-layout.navbar>
 </header>

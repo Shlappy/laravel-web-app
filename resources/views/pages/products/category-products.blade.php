@@ -4,7 +4,7 @@
 
             <x-products.filters id="filters" :filters="$filters" class="filter filter__products"></x-products.filters>
 
-            <div class="product__catalog-wrapper" x-data>
+            <div class="product__catalog-wrapper">
                 <x-product.product-list :products="$products"></x-product.product-list>
             </div>
 

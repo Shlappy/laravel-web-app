@@ -38,11 +38,6 @@ class ProductController extends Controller
 
         $filters = $this->filters->getFiltersForCategory($category);
 
-        JavaScript::put([
-            'products' => $this->productsInCart($products)->all(),
-            'pagination' => $products->links()->render()
-        ]);
-
         return view('pages.products.category-products', compact(['filters', 'products']));
     }
 

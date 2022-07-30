@@ -13,15 +13,19 @@
   <link href="http://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 </head>
 
-<body id="app">
-  <x-layout.header></x-layout.header>
+<body>
+  <div id="app">
+    <x-layout.header></x-layout.header>
 
-  {{ $slot }}
+    <main>
+      {{ $slot }}
+    </main>
 
-  <x-modals></x-modals>
+    <x-modals></x-modals>
 
-  @include ('layout.footer')
-  
+    @include ('layout.footer')
+  </div>
+
   <script src="{{ mix('/js/app.js') }}?{{ time() }}"></script>
 </body>
 
