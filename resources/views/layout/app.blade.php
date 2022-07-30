@@ -13,7 +13,7 @@
   <link href="http://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 </head>
 
-<body>
+<body id="app">
   <x-layout.header></x-layout.header>
 
   {{ $slot }}
@@ -22,7 +22,7 @@
 
   @include ('layout.footer')
   
-  <script src="{{ asset('js/app.js') }}?{{ time() }}"></script>
+  <script src="{{ mix('/js/app.js') }}?{{ time() }}"></script>
 </body>
 
 </html>
