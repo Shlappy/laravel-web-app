@@ -6,6 +6,7 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia'
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -15,8 +16,7 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+app.use(createPinia());
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,9 +26,9 @@ app.component('example-component', ExampleComponent);
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// Object.entries(import.meta.globEager('./**/*.vue')).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
+Object.entries(import.meta.globEager('./**/*.vue')).forEach(([path, definition]) => {
+  app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+});
 
 /**
  * Finally, we will attach the application instance to a HTML element with

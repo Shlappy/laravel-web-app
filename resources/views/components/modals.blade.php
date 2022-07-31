@@ -1,4 +1,4 @@
-<div class="">
+<div class="modals">
 
     <div class="cart-modal" id="cart-modal">
         <div class="cart-modal__body">

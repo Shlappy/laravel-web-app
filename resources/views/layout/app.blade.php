@@ -21,12 +21,12 @@
       {{ $slot }}
     </main>
 
-    <x-modals></x-modals>
-
     @include ('layout.footer')
+
+    <x-modals></x-modals>
   </div>
 
-  <script src="{{ mix('/js/app.js') }}?{{ time() }}"></script>
+  @vite(['resources/js/app.js'])
 </body>
 
 </html>
