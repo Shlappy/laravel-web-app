@@ -72,7 +72,7 @@ class CartController extends Controller
     {
         return response()->json([
             'count' => Cart::getTotalQuantity(),
-            'subTotal' => format_price(Cart::getTotal()),
+            'total' => format_price(Cart::getTotal()),
             'list' => Cart::getContentForOutput(),
         ]);
     }
