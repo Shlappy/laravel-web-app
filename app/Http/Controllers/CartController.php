@@ -18,9 +18,13 @@ class CartController extends Controller
         $this->product = $product;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $cartItems = Cart::getContent();
+
+        if ($request->ajax() || $request->isJson()) {
+            return $this->ajaxCartResponse();
+        }
 
         return view('pages.cart.index', compact('cartItems'));
     }

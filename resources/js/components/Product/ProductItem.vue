@@ -1,7 +1,7 @@
 <script setup>
 import { reactive } from "vue";
-import MainButton from "./UI/MainButton.vue";
-import { useCartStore } from "./stores/cartStore.js";
+import MainButton from "@/components/UI/MainButton.vue";
+import { useCartStore } from "@/components/stores/cartStore.js";
 
 const cart = useCartStore();
 

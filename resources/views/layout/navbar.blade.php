@@ -15,17 +15,7 @@
             </x-layout.navbar-item>
         @endguest
 
-        <x-layout.navbar-item
-            :href="route('cart.list')" 
-            class="cart__link" 
-            id="cart-link" 
-            >
-            <span class="cart__icon"></span>
-            <div class="cart__header-total">
-                <span class="cart__header-price"></span>
-                <span>₽</span>
-            </div>
-        </x-layout.navbar-item>
+        <cart-link class="menu__item"></cart-link>
 
         @auth
             <x-layout.navbar-item :href="route('account', ['user' => auth()->user()])" class="account__icon">

@@ -8,7 +8,6 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
 use Common;
-use JavaScript;
 use Cart;
 
 class ProductController extends Controller
@@ -25,8 +24,6 @@ class ProductController extends Controller
 
     /**
      * Category products page
-     * 
-     * todo: put AJAX response into a separate function
      */
     public function index(Request $request, Category $category)
     {
@@ -36,9 +33,7 @@ class ProductController extends Controller
             return $this->productsResponse($products, Common::SUCCESS);
         }
 
-        $filters = $this->filters->getFiltersForCategory($category);
-
-        return view('pages.products.category-products', compact(['filters', 'products']));
+        return view('pages.products.category-products', compact(['products', 'category']));
     }
 
     /**

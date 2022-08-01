@@ -3,8 +3,6 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use JavaScript;
-use Cart;
 
 class AppLayout extends Component
 {

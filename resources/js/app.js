@@ -5,8 +5,9 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
+import { createApp, onBeforeMount } from 'vue';
 import { createPinia } from 'pinia'
+import { useCartStore } from "./components/stores/cartStore.js";
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -14,7 +15,15 @@ import { createPinia } from 'pinia'
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
+const app = createApp({
+  setup() {
+    const cart = useCartStore();
+
+    onBeforeMount(() => {
+      cart.initialize();
+    })
+  }
+});
 
 app.use(createPinia());
 
