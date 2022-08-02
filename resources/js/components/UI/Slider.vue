@@ -1,12 +1,20 @@
 <script setup>
+import { ref } from 'vue';
+
 defineProps({
   options: Object,
 });
+
+const slider = ref(null);
+
+onMounted(() => {
+  
+})
 </script>
 
 <template>
   <div class="slider-wrapper filter-item__slider pd">
-    <div
+    <div ref="slider"
       class="slider"
       :class="`slider-${options.type}`"
       :min="options.max"

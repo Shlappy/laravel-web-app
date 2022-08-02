@@ -1,6 +1,5 @@
 <script setup>
 import Slider from "@/components/UI/Slider.vue";
-import { ref } from "vue";
 
 defineProps({
   filter: {
@@ -8,12 +7,6 @@ defineProps({
     required: true,
   },
 });
-
-const opened = ref(false);
-
-const openFilter = () => {
-  opened.value = !opened.value;
-}
 </script>
 
 <template>
@@ -24,16 +17,15 @@ const openFilter = () => {
     :data-type="filter.type"
   >
     <div class="filter-item__wrapper">
-      <a
+      <a v-collapsible
         class="filter-item__toggle pd"
         :class="{ 'filter-item__toggle--between': filter.type === 'between' }"
-        @click.prevent="openFilter"
         href="#"
       >
         {{ filter.name }}
       </a>
 
-      <div class="filter-item__inner" v-show="opened">
+      <div class="filter-item__inner">
         <div class="filter-item__content">
           <Slider v-if="filter.type === 'between'" :options="filter" />
 
