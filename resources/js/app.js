@@ -25,6 +25,10 @@ const app = createApp({
   }
 });
 
+app.directive('collapse', {
+
+})
+
 app.use(createPinia());
 
 /**

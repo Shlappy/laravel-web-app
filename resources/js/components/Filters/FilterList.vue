@@ -1,7 +1,7 @@
 <script setup>
 import FilterItem from "@/components/Filters/FilterItem.vue";
 import axios from "axios";
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 
 const props = defineProps({
   filtersType: {
@@ -16,7 +16,7 @@ const props = defineProps({
 
 const filters = ref([]);
 
-const getFilters = () => {
+const getFilters = async () => {
   const tempUrl = `/api/filters/${props.category.id}`;
 
   axios.get(tempUrl).then((res) => {
@@ -25,12 +25,14 @@ const getFilters = () => {
   }).catch(err => console.error(err));
 }
 
-getFilters();
+onBeforeMount(() => {
+  getFilters();
+})
 </script>
 
 <template>
   <div id="filters" class="filter">
-    <FilterItem />
+    <FilterItem v-for="filter in filters" :key="filter.slug" :filter="filter" />
 
     <div class="filter__buttons">
       <button type="primary">Применить</button>
