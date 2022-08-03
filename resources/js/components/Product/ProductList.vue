@@ -1,5 +1,6 @@
 <script setup>
 import ProductItem from "@/components/Product/ProductItem.vue";
+import Pagination from "@/components/Pagination.vue";
 import axios from "axios";
 import { ref } from "vue";
 
@@ -9,10 +10,11 @@ const props = defineProps({
 
 const productList = ref(props.products);
 
-const getProducts = () => {
-  axios.post()
-    .then(res => console.log(res))
-    .catch(err => console.error(err));
+const getProducts = (page) => {
+  console.log(page);
+  // axios.post()
+  //   .then(res => console.log(res))
+  //   .catch(err => console.error(err));
 };
 </script>
 
@@ -23,5 +25,5 @@ const getProducts = () => {
     </template>
   </div>
 
-  <div>pagination</div>
+  <Pagination :paginationData="productList" @newPage="getProducts" />
 </template>

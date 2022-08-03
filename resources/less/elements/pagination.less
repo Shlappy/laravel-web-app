@@ -3,4 +3,28 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &__link {
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+
+    &[disabled=true],
+    &.is-current {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    &-page {
+      margin: 0 5px;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
 }
