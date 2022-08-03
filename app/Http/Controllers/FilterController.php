@@ -23,6 +23,6 @@ class FilterController extends Controller
      */
     public function index(Category $category)
     {
-        return $this->filters->getFiltersForCategory($category);
+        return response()->json($this->filters->getFiltersForCategory($category));
     }
 }

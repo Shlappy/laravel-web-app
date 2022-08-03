@@ -7,3 +7,4 @@ Dev:
 
 Prod:
   1. Enable css and js caching in app.blade.php
+  6. remove Alpine.js

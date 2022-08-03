@@ -12,7 +12,7 @@ defineProps({
   <div class="container container--lg">
     <div class="product__blocks" :data-category="category.id">
 
-      <FilterList :category="category" :filters-type="'products'" class="filter__products" />
+      <FilterList :category="category" class="filter__products" />
 
       <div class="product__catalog-wrapper">
         <ProductList :products="products" />

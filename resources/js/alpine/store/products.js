@@ -125,7 +125,7 @@ Alpine.store('products', {
     return filtersData;
   },
 
-  // Disable buttons while AJAX calls
+  // Disable buttons while AJAX isn't finished
   disableButtons(state = true) {
     const ajaxButtons = document.querySelectorAll('.ajax-button');
 
