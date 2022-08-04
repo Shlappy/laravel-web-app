@@ -1,3 +1,3 @@
 <x-app-layout>
-    <category-page :category='@json($category)' :products='@json($products)'></category-page>
+    <category-page :category='@json($category)'></category-page>
 </x-app-layout>

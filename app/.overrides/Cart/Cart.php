@@ -719,26 +719,6 @@ class Cart
         });
     }
 
-    // OVERRIDE
-    /**
-     * get the cart with formatted price for front-end
-     *
-     * @return CartCollection
-     */
-    public function getContentForOutput()
-    {
-        return $this->getContent()->map(function ($product, $id) {
-            return collect([
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => format_price($product->price),
-                'quantity' => $product->quantity,
-                'attributes' => $product->attributes,
-            ]);
-        });
-    }
-    // END OVERRIDE
-
     /**
      * check if cart is empty
      *

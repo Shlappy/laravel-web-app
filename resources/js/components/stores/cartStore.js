@@ -1,31 +1,26 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
-import { computed, reactive } from 'vue';
+import { computed, ref } from 'vue';
 
 export const useCartStore = defineStore('cart', () => {
-  const data = reactive({
-    count: 0,
-    total: '',
-    list: []
-  });
+  /** @type { count: number, list: Object, symbol: string, total: string } */
+  const data = ref({});
 
   const products = computed(() => data.list);
 
   const setData = (inputData) => {
-    data.count = inputData.count;
-    data.total = inputData.total;
-    data.list = inputData.list;
+    data.value = inputData;
   }
 
-  const clearProducts = () => {
+  const clearCart = () => {
     data.list = [];
   }
 
   const initialize = async () => {
     axios.get('/cart')
-    .then(res => setData(res.data))
+    .then(res => {setData(res.data); console.log(res)})
     .catch(err => console.error(err));
   }
 
-  return { initialize, products, data, setData, clearProducts };
+  return { initialize, products, data, setData, clearCart };
 })

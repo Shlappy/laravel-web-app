@@ -16,8 +16,7 @@ defineProps({
     <a :href="link">
       <span class="cart__icon" :data-count="cart.data.count"></span>
       <div class="cart__header-total">
-        <span class="cart__header-price">{{ cart.data.total }}</span>
-        <span>₽</span>
+        <span class="cart__header-price">{{ cart.data.total }} {{ cart.data.symbol }}</span>
       </div>
     </a>
   </div>

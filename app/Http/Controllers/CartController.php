@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Product\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Cart;
@@ -23,7 +24,7 @@ class CartController extends Controller
         $cartItems = Cart::getContent();
 
         if ($request->ajax() || $request->isJson()) {
-            return $this->ajaxCartResponse();
+            return $this->cartResponse();
         }
 
         return view('pages.cart.index', compact('cartItems'));
@@ -37,7 +38,7 @@ class CartController extends Controller
 
         session()->flash('success', __('cart.added'));
 
-        return $this->ajaxCartResponse();
+        return $this->cartResponse();
     }
 
     public function update(Request $request)
@@ -46,7 +47,7 @@ class CartController extends Controller
 
         session()->flash('success', __('cart.added'));
 
-        return $this->ajaxCartResponse();
+        return $this->cartResponse();
     }
 
     public function remove(Request $request)
@@ -55,7 +56,7 @@ class CartController extends Controller
 
         session()->flash('success', __('cart.removed'));
 
-        return $this->ajaxCartResponse();
+        return $this->cartResponse();
     }
 
     public function clear()
@@ -64,7 +65,7 @@ class CartController extends Controller
 
         session()->flash('success', __('cart.cleared'));
 
-        return $this->ajaxCartResponse();
+        return $this->cartResponse();
     }
 
     /**
@@ -72,12 +73,13 @@ class CartController extends Controller
      * 
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function ajaxCartResponse()
+    protected function cartResponse()
     {
         return response()->json([
             'count' => Cart::getTotalQuantity(),
             'total' => format_price(Cart::getTotal()),
-            'list' => Cart::getContentForOutput(),
+            'symbol' => __('app.money_symbol'),
+            'list' => new ProductCollection(Cart::getContent()),
         ]);
     }
 }
