@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('filter_specs', function (Blueprint $table) {
+        Schema::create('filters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->char('type', 20);
-            $table->char('slug', 50)->nullable();
+            $table->char('type', 30);
+            $table->string('slug')->nullable();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filter_specs');
+        Schema::dropIfExists('filters');
     }
 };
