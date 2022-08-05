@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Product\ProductCollection;
 use App\Models\Category;
-use App\Models\Filter;
+use App\Models\Filters\Filter;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;

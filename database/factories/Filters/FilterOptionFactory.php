@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Filters;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -9,12 +9,15 @@ use Illuminate\Support\Facades\DB;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class FilterFactory extends Factory
+class FilterOptionFactory extends Factory
 {
+
+  /**
+   * Factory for Filter and FilterOption models
+   */
 
   public array $type = [
     // 'select',
-    // 'list',
     'between',
     'checkbox'
   ];
@@ -34,7 +37,6 @@ class FilterFactory extends Factory
     // 'select' => [
     //   'Размер'
     // ]
-    // 'list' => []
   ];
 
   public array $values = [
@@ -70,8 +72,8 @@ class FilterFactory extends Factory
     ]
   ];
 
-  public string $currentType;
-  public string $specName;
+  private string $currentType;
+  private string $filterName;
 
   /**
    * Define the model's default state.
@@ -80,63 +82,62 @@ class FilterFactory extends Factory
    */
   public function definition()
   {
-    $specId = $this->createFilterSpec();
-    return $this->randomFilter($specId);
+    $filterId = $this->createFilters();
+    return $this->createFilterOptions($filterId);
   }
 
   /**
-   * Create or update filter spec and return id
+   * Create or update filters and return id
    * 
-   * @return int Spec id
+   * @return int Filter id
    */
-  public function createFilterSpec()
+  public function createFilters()
   {
     $randType = rand(0, count($this->type) - 1); // List, between, select etc.
-    $this->currentType = $this->type[$randType]; 
-    $this->specName = $this->name[$this->currentType][rand(0, count($this->name[$this->currentType]) - 1)]; // Random name
+    $this->currentType = $this->type[$randType];
+    $this->filterName = $this->name[$this->currentType][rand(0, count($this->name[$this->currentType]) - 1)]; // Random name
 
-    // Check if spec name exists and return it's id
-    $spec = DB::table('filter_specs')->where('name', $this->specName)->first();
-    if (!is_null($spec)) return $spec->id;
+    // Check if filter name exists and return it's id
+    $filter = DB::table('filters')->where('name', $this->filterName)->first();
+    if (!is_null($filter)) return $filter->id;
 
     // Otherwise create record and return id
-    return DB::table('filter_specs')
+    return DB::table('filters')
       ->insertGetId([
-        'name' => $this->specName,
+        'name' => $this->filterName,
         'type' => $this->currentType,
-        'slug' => Str::slug($this->specName),
+        'slug' => Str::slug($this->filterName),
       ]);
   }
 
-  public function randomFilter($specId)
+  public function createFilterOptions($filterId)
   {
-    $product = \App\Models\Product::inRandomOrder()->first();
-
     $filterData = [
-      'product_id' => $product->id,
-      'category_id' => $product->category_id,
-      'specs_id' => $specId,
+      'filter_id' => $filterId,
     ];
 
     switch ($this->currentType) {
       case 'between':
         $filterData += [
-          'value' => (string) rand(1, 10000)
+          'numeric_value' => rand(1, 10000)
         ];
+
+        $filterData += ['slug' => Str::slug($filterData['numeric_value'])];
         break;
 
-      case 'checkbox': 
+      case 'checkbox':
       case 'select':
         $filterData += [
-          'value' => $this->values[$this->specName][rand(0, count($this->values[$this->specName]) - 1)]
+          'string_value' => $this->values[$this->filterName][rand(0, count($this->values[$this->filterName]) - 1)]
         ];
+
+        $filterData += ['slug' => Str::slug($filterData['string_value'])];
         break;
 
       case 'list':
         break;
     }
 
-    $filterData += ['code' => Str::slug($filterData['value'])];
     return $filterData;
   }
 }

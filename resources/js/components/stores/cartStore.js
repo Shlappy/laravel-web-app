@@ -18,7 +18,7 @@ export const useCartStore = defineStore('cart', () => {
 
   const initialize = async () => {
     axios.get('/cart')
-    .then(res => {setData(res.data); console.log(res)})
+    .then(res => setData(res.data))
     .catch(err => console.error(err));
   }
 

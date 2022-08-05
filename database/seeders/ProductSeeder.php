@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 
@@ -26,7 +25,7 @@ class ProductSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         Product::factory()
-            ->count(130)
+            ->count(120)
             ->create();
     }
 }

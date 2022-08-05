@@ -28,10 +28,9 @@ const filterRefs = ref([]);
 const getFilters = async () => {
   const tempUrl = `/api/filters/${props.category.id}`;
 
-  axios
-    .get(tempUrl)
+  axios.get(tempUrl)
     .then((res) => {
-      filters.value = res.data;
+      filters.value = res.data; console.log(res.data)
     })
     .catch((err) => console.error(err));
 };
@@ -41,7 +40,7 @@ const getProducts = () => {
 };
 
 /**
- * Forms filter's data to send using ajax
+ * Forms filter's data to send via ajax
  */
 const applyFilters = () => {
   let outputData = [];

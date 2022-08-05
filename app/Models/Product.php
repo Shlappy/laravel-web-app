@@ -6,7 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
-use App\Models\Filter;
+use App\Models\Filters\FilterOption;
 
 class Product extends Model
 {
@@ -31,9 +31,9 @@ class Product extends Model
         ];
     }
 
-    public function filters()
+    public function filterOptions()
     {
-        return $this->hasMany(Filter::class);
+        return $this->belongsToMany(FilterOption::class);
     }
 
     public function category()
