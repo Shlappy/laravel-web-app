@@ -39,8 +39,8 @@ class FilterOptionSeeder extends Seeder
                 $item->products()->attach($product->id);
             }
 
-            // Fill category_filter table
-            
+            // Fill category_filter table (or in Filters?)
+
         });
     }
 }
