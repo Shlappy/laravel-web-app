@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\File;
@@ -25,7 +24,7 @@ class ProductSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         Product::factory()
-            ->count(120)
+            ->count(30)
             ->create();
     }
 }

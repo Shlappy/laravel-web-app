@@ -22,11 +22,6 @@ return new class extends Migration
             $table->foreignId('filter_id')
                 ->constrained('filters')
                 ->cascadeOnDelete();
-
-            $table->foreignId('category_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
         });
     }
 

@@ -22,9 +22,14 @@ class Filter extends Model
         return $this->hasMany(FilterOption::class);
     }
 
+    public function category()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
     public function getFiltersForCategory(Category $category)
     {
-        $filters = Filter::with('filterOptions')->get();
+        $filters = $category->filters()->with(['filterOptions' => fn ($query) => $query->where('filter_id', '<', 2)])->get();
 
         return response()->json($filters);
     }

@@ -23,11 +23,6 @@ class FilterOption extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function filter()
     {
         return $this->belongsTo(Filter::class);

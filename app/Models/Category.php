@@ -26,10 +26,10 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    // public function filters() 
-    // {
-    //   return $this->hasMany(Filter::class);
-    // }
+    public function filters() 
+    {
+      return $this->belongsToMany(Filters\Filter::class);
+    }
 
     public function products()
     {
