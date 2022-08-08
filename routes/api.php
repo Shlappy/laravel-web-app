@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::get('filters/{category:id}', [\App\Http\Controllers\FilterController::class, 'index']);
+Route::get('filters/{category:id}', [\App\Http\Controllers\Api\FilterController::class, 'index']);

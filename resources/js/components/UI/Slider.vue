@@ -6,12 +6,12 @@ const props = defineProps({
 });
 
 const options = props.options;
-options.min = parseInt(props.options.min);
-options.max = parseInt(props.options.max);
+options.min = parseInt(options.filter_options[0].numeric_value);
+options.max = parseInt(options.filter_options[options.filter_options.length-1].numeric_value);
 
 const inputs = reactive({
-  minRange: null,
-  maxRange: null,
+  min: null,
+  max: null,
 });
 
 const sliderData = {
@@ -27,8 +27,8 @@ const sliderData = {
 const slider = ref(null);
 
 function reset() {
-  inputs.minRange = options.min;
-  inputs.maxRange = options.max;
+  inputs.min = options.min;
+  inputs.max = options.max;
   updateSlider();
 }
 
@@ -37,15 +37,15 @@ onMounted(() => {
 
   slider.value.noUiSlider.on("update", (values, handle) => {
     if (handle) {
-      inputs.maxRange = Math.round(values[handle]);
+      inputs.max = Math.round(values[handle]);
     } else {
-      inputs.minRange = Math.round(values[handle]);
+      inputs.min = Math.round(values[handle]);
     }
   });
 });
 
 const updateSlider = () => {
-  slider.value.noUiSlider.set([inputs.minRange, inputs.maxRange]);
+  slider.value.noUiSlider.set([inputs.min, inputs.max]);
 };
 
 defineExpose({
@@ -69,7 +69,7 @@ defineExpose({
       <input
         type="number"
         name="min"
-        v-model="inputs.minRange"
+        v-model="inputs.min"
         @change="updateSlider"
         :min="options.min"
         :max="options.max"
@@ -79,7 +79,7 @@ defineExpose({
         type="number"
         name="max"
         @change="updateSlider"
-        v-model="inputs.maxRange"
+        v-model="inputs.max"
         :min="options.min"
         :max="options.max"
         class="form-input slider__input slider__input-max"

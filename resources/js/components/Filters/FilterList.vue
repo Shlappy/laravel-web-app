@@ -5,15 +5,12 @@ import axios from "axios";
 import { onBeforeMount, ref } from "vue";
 
 const props = defineProps({
-  // filtersType: {
-  //   type: String,
-  //   default: "products",
-  // },
-  category: {
-    type: Object,
-    required: false,
-  },
-});
+    category: {
+      type: Object,
+      required: false,
+    },
+  }),
+  emit = defineEmits(["filterApply"]);
 
 /**
  * Filters for the current catalog
@@ -30,13 +27,15 @@ const getFilters = async () => {
 
   axios.get(tempUrl)
     .then((res) => {
-      filters.value = res.data; console.log(res.data)
+      filters.value = res.data.original;
     })
     .catch((err) => console.error(err));
 };
 
 const getProducts = () => {
   let filtersData = applyFilters();
+
+  emit('filterApply', filtersData);
 };
 
 /**
@@ -49,15 +48,14 @@ const applyFilters = () => {
     const filterData = filter.filterData;
     let data = {
       name: filterData.name,
+      slug: filterData.slug,
       type: filterData.type,
     };
 
-    if (data.type === "checkbox") {
-      if (!(data.values = filter.checkedOptions())) return;
-    }
-    if (data.type === "between") {
-      if (!(data.values = filter.sliderOptions())) return;
-    }
+    if (data.type === "checkbox" && !(data.values = filter.checkedOptions()))
+      return;
+    if (data.type === "between" && !(data.values = filter.sliderOptions()))
+      return;
 
     outputData.push(data);
   });
@@ -68,8 +66,8 @@ const applyFilters = () => {
 const resetFilters = () => {
   filterRefs.value.forEach((filter) => {
     filter.reset();
-  })
-}
+  });
+};
 
 onBeforeMount(() => {
   getFilters();
@@ -80,7 +78,7 @@ onBeforeMount(() => {
   <div id="filters" class="filter">
     <FilterItem
       v-for="filter in filters"
-      :key="filter.slug"
+      :key="filter.id"
       :filterData="filter"
       ref="filterRefs"
     />

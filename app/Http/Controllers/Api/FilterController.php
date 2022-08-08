@@ -1,9 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Category;
 use App\Models\Filters\Filter;
+use App\Http\Controllers\Controller;
 // use Illuminate\Http\Request;
 
 class FilterController extends Controller

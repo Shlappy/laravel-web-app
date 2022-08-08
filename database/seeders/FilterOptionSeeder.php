@@ -75,7 +75,7 @@ class FilterOptionSeeder extends Seeder
         ]
     ];
 
-    private int $count = 80;
+    private int $count = 450;
 
     /**
      * Run the database seeds.

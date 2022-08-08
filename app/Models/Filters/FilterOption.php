@@ -27,11 +27,4 @@ class FilterOption extends Model
     {
         return $this->belongsTo(Filter::class);
     }
-
-    public function getFiltersForCategory(Category $category)
-    {
-        $filters = FilterOption::where('category_id', $category->id)->with('filter')->get();
-
-        return (new \App\Services\Filter\FiltersService())->filterResponse($filters);
-    }
 }

@@ -29,7 +29,16 @@ class Filter extends Model
 
     public function getFiltersForCategory(Category $category)
     {
-        $filters = $category->filters()->with(['filterOptions' => fn ($query) => $query->where('filter_id', '<', 2)])->get();
+        $filters = $category->filters()->with([
+            'filterOptions' => function ($query) use ($category) {
+                $query->select('filter_options.*')
+                ->join('filter_option_product as fop', 'fop.filter_option_id', '=', 'filter_options.id')
+                ->join('products as p', 'p.id', '=', 'fop.product_id')
+                ->groupBy('string_value', 'numeric_value')
+                ->orderBy('numeric_value')
+                ->where('p.category_id', $category->id);
+            }
+        ])->get();
 
         return response()->json($filters);
     }

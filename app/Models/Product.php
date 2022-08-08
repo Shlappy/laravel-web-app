@@ -40,4 +40,17 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Applies filters
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param array $filters
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanFilter($builder, $filters)
+    {
+        return (new \App\Filters\BaseFilter($filters))->filter($builder);
+    }
 }

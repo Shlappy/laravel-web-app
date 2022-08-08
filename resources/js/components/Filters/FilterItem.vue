@@ -9,11 +9,9 @@ const props = defineProps({
   },
 });
 
-const filterData = props.filterData;
-
-const filterOptions = ref([]);
-
-const slider = ref(null);
+const filterData = props.filterData,
+  filterOptions = ref([]),
+  slider = ref(null);
 
 /**
  * Return checked options
@@ -39,7 +37,7 @@ function sliderOptions() {
   const options = slider.value.options;
   const inputs = slider.value.inputs;
 
-  if (options.min === inputs.minRange && options.max === inputs.maxRange) {
+  if (options.min === inputs.min && options.max === inputs.max) {
     return false;
   }
 
@@ -64,7 +62,7 @@ defineExpose({
   filterData,
   checkedOptions,
   sliderOptions,
-  reset
+  reset,
 });
 </script>
 
@@ -96,16 +94,16 @@ defineExpose({
 
           <ul v-if="filterData.type === 'checkbox'" class="filter-item__list">
             <label
-              v-for="spec in filterData.values"
-              :key="spec.code"
+              v-for="option in filterData.filter_options"
+              :key="option.slug"
               class="filter-item__list-item form-input__checkbox pd"
             >
-              <span>{{ spec.value }}</span>
+              <span>{{ option.string_value }}</span>
               <input
                 ref="filterOptions"
                 type="checkbox"
                 class="form-input__checkbox-input"
-                :data-value="spec.code"
+                :data-value="option.slug"
                 @click.stop
               />
             </label>

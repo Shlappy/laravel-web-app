@@ -4,6 +4,7 @@
  */
 
 import './bootstrap';
+import './main';
 import { createApp, onBeforeMount } from 'vue';
 import { createPinia } from 'pinia'
 import { useCartStore } from "./components/stores/cartStore.js";
