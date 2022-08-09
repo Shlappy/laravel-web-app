@@ -2,13 +2,13 @@
 
 namespace App\Filters;
 
-
+use App\Filters\Contracts\Filter;
 use Illuminate\Database\Eloquent\Builder;
 
-class TestFilter
+class TestFilter implements Filter
 {
-    public function filter(Builder $builder, $value)
+    public function filter(Builder $builder, string $value): Builder
     {
-        return $builder->where('category_id', 1);
+        return $builder->limit($value);
     }
 }

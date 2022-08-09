@@ -7,6 +7,7 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use App;
+use Str;
 
 class BaseFilter
 {
@@ -29,7 +30,6 @@ class BaseFilter
      * Resolve filter classes and apply them
      * 
      * @param Builder $builder
-     * 
      * @return Builder New builder with filters applied
      */
     public function filter(Builder $builder)
@@ -42,12 +42,13 @@ class BaseFilter
 
     public function getRequestedFilters()
     {
-        return array_filter($this->request->only($this->declared_filters));
+        // return array_filter($this->request->only($this->declared_filters));
+        return ['test' => '52'];
     }
 
     public function resolveFilterClass($declared_filter_key)
     {
-        $filter_name = studly_case($declared_filter_key);
+        $filter_name = Str::studly($declared_filter_key);
         $class_name = $this->namespace . $filter_name . "Filter";
         $class_instance = App::make($class_name);
         return $class_instance;
