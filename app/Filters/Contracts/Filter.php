@@ -9,7 +9,6 @@ interface Filter
      * 
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @param  string  $value
-     * @return  \Illuminate\Database\Eloquent\Builder
      */
     public function filter(\Illuminate\Database\Eloquent\Builder $builder, string $value);
 }

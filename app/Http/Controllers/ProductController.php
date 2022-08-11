@@ -53,6 +53,7 @@ class ProductController extends Controller
         $filters = ['test'];
         $products = Product::canFilter($filters)->get();
         
-        return response()->json($products);
+        // return response()->json($products);
+        return response()->json($request);
     }
 }

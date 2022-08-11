@@ -37,13 +37,12 @@ class BaseFilter
         foreach ($this->getRequestedFilters() as $filter => $value) {
             $this->resolveFilterClass($filter)->filter($builder, $value);
         }
-        return $builder;
     }
 
     public function getRequestedFilters()
     {
         // return array_filter($this->request->only($this->declared_filters));
-        return ['test' => '52'];
+        return ['limit' => '22', 'order' => 'id'];
     }
 
     public function resolveFilterClass($declared_filter_key)

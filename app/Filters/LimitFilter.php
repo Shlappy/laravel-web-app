@@ -5,10 +5,10 @@ namespace App\Filters;
 use App\Filters\Contracts\Filter;
 use Illuminate\Database\Eloquent\Builder;
 
-class TestFilter implements Filter
+class LimitFilter implements Filter
 {
-    public function filter(Builder $builder, string $value): Builder
+    public function filter(Builder $builder, string $value)
     {
-        return $builder->limit($value);
+        $builder->limit($value);
     }
 }
