@@ -33,9 +33,9 @@ const getFilters = async () => {
 };
 
 const getProducts = () => {
-  let filtersData = applyFilters();
+  let filters = applyFilters();
 
-  emit('filterApply', filtersData);
+  emit('filterApply', filters);
 };
 
 /**

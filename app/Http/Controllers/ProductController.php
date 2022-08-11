@@ -50,10 +50,8 @@ class ProductController extends Controller
     { 
         // $products = (new FilterService())->applyFilters($request, $category);
 
-        $filters = ['test'];
-        $products = Product::canFilter($filters)->get();
+        $products = Product::canFilter($request->filters)->get();
         
-        // return response()->json($products);
-        return response()->json($request);
+        return response()->json($products);
     }
 }

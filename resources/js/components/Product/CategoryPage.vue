@@ -18,7 +18,7 @@ const getProducts = () => {
 };
 
 const applyFilters = (data) => {
-  ajaxCall(`/products/${props.category.slug}`, true, data);
+  ajaxCall(`/products/${props.category.slug}`, true, {'filters': data});
 }
 
 const changePage = async (page) => {

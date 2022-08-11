@@ -51,6 +51,6 @@ class Product extends Model
      */
     public function scopeCanFilter($builder, $filters)
     {
-        (new \App\Filters\BaseFilter($filters))->filter($builder);
+        (new \App\Filters\ProductFilter($filters))->filter($builder);
     }
 }
