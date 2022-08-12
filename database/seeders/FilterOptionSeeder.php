@@ -90,17 +90,28 @@ class FilterOptionSeeder extends Seeder
         DB::table('filter_option_product')->truncate();
         Schema::enableForeignKeyConstraints();
 
+        $countProducts = Product::all()->count();
+
         for ($i = 0; $i < $this->count; $i++) {
             $filter = Filter::inRandomOrder()->firstOrFail();
-            $product = Product::inRandomOrder()->firstOrFail();
+            $filterOption = $this->createFilterOption($filter);
+            $attached = false;
 
-            $optionFilter = $this->createFilterOption($filter);
+            for ($j = 0; $j < $countProducts; $j++) {
+                $product = Product::inRandomOrder()->firstOrFail();
 
-            $optionFilter->products()->attach($product->id);
+                if (!$filterOption->products()->where('product_id', $product->id)->exists()) {
+                    $filterOption->products()->attach($product->id);
+                    $attached = true;
+                    break;
+                }
+            }
+
+            if (!$attached) continue;
 
             // Fill category_filter table
-            if (!$optionFilter->filter->category()->where('category_id', $product->category_id)->exists()) {
-                $optionFilter->filter->category()->attach($product->category_id);
+            if (!$filterOption->filter->category()->where('category_id', $product->category_id)->exists()) {
+                $filterOption->filter->category()->attach($product->category_id);
             }
         }
     }

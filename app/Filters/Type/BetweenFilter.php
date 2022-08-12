@@ -7,8 +7,11 @@ use App\Contracts\Filter;
 
 class BetweenFilter implements Filter
 {
-    public function filter(Builder $builder)
+    public function filter(Builder $builder, array $data): void
     {
-        
+        $builder->whereBetween('numeric_value', $data['values'])
+            ->whereHas('filter', function (Builder $query) use ($data) {
+                $query->where('slug', $data['slug']);
+            });
     }
 }

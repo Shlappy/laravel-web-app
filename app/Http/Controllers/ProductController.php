@@ -48,10 +48,8 @@ class ProductController extends Controller
      */
     public function applyFilters(Request $request, Category $category)
     { 
-        // $products = (new FilterService())->applyFilters($request, $category);
-
-        $products = Product::canFilter($request->filters)->get();
+        $products = Product::canFilter($request->filters)->paginate(12);
         
-        return response()->json($products);
+        return new ProductCollection($products);
     }
 }
