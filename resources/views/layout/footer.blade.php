@@ -1,3 +1,3 @@
 <div>
-  Footer
+  {{-- Footer --}}
 </div>

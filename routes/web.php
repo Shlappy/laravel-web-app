@@ -6,6 +6,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\Business\StatementController;
+use App\Http\Controllers\Business\TagController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +19,9 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/statements', [StatementController::class, 'index'])->name('statements');
+Route::get('/statements/tag/{tag:id}', [StatementController::class, 'filter']);
 
 Route::get('/', function () {
     return view('pages.index');

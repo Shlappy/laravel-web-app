@@ -1,6 +1,6 @@
 <div class="modals">
 
-    <div class="cart-modal" id="cart-modal">
+    {{-- <div class="cart-modal" id="cart-modal">
         <div class="cart-modal__body">
             <div class="cart-modal__row cart-modal__header">
                 <div class="cart-modal__header-title">
@@ -16,6 +16,6 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>

@@ -18,6 +18,7 @@ class Navbar extends Component
   {
     $this->navbarItems = [
       ['label' => 'Каталог', 'href' => '/catalog'],
+      ['label' => 'Выписки', 'href' => '/statements'],
       // ['label' => 'Other projects', 'href' => '/other'],
     ];
   }
