@@ -17,7 +17,7 @@ const mainClass = ref(`button__${props.buttonType}`);
 
 <template>
   <button class="button" :class="mainClass">
-  <div :class="[buttonType]"></div>
+  <div :class="buttonType"></div>
     <slot></slot>
   </button>
 </template>

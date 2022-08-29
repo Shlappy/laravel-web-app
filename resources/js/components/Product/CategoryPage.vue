@@ -18,7 +18,8 @@ const getProducts = () => {
 };
 
 const applyFilters = (data) => {
-  ajaxCall(`/products/${props.category.slug}`, true, {'filters': data});
+  if (data.length) ajaxCall(`/products/${props.category.slug}`, true, {'filters': data});
+  else ajaxCall(`/products/${props.category.slug}`);
 }
 
 const changePage = async (page) => {
@@ -37,7 +38,7 @@ async function ajaxCall(url, post = false, body = {}) {
   else res = axios.get(url);
 
   return res
-    .then((res) => {products.value = res.data; console.log(res)})
+    .then((res) => products.value = res.data)
     .catch((err) => console.error(err));
 }
 

@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Filters\FilterOption;
 
 class Product extends Model
 {
-    use HasFactory, Sluggable, \App\Traits\UsesUuid;
+    use HasFactory, Sluggable, UsesUuid;
 
     protected $fillable = [
         'name',
@@ -42,7 +43,7 @@ class Product extends Model
     }
 
     /**
-     * Applies filters
+     * Apply filters
      * 
      * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param array $filters

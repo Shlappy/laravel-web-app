@@ -11,7 +11,7 @@ class BetweenFilter implements Filter
     {
         $builder->whereBetween('numeric_value', $data['values'])
             ->whereHas('filter', function (Builder $query) use ($data) {
-                $query->where('slug', $data['slug']);
+                $query->where('filters.slug', $data['slug']);
             });
     }
 }

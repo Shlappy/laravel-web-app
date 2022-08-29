@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class CheckboxFilter implements Filter
 {
-    public function filter(Builder $builder, array $data): void
+    public function filter(Builder $builder, array $data, $table = 'filter_options'): void
     {
-        $builder->whereIn('slug', $data['values'])
+        $builder->whereIn($table.'.slug', $data['values'])
             ->whereHas('filter', function (Builder $query) use ($data) {
-                $query->where('slug', $data['slug']);
+                $query->where('filters.slug', $data['slug']);
             });
     }
 }

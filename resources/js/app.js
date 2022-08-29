@@ -18,11 +18,12 @@ const app = createApp({
     const cart = useCartStore();
 
     onBeforeMount(() => {
-      cart.initialize();
+      cart.fetchCart();
     })
   }
 });
 
+// Directives
 app.directive('collapsible', {
   mounted: (el) => {
     el.addEventListener("click", function () {

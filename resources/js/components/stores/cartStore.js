@@ -12,15 +12,21 @@ export const useCartStore = defineStore('cart', () => {
     data.value = inputData;
   }
 
-  const clearCart = () => {
-    data.list = [];
+  const clear = () => {
+    axios.post('/cart-clear')
+      .then(res => setData(res.data))
+      .catch(err => console.error(err));
   }
 
-  const initialize = async () => {
+  const removeItem = () => {
+
+  }
+
+  const fetchCart = async () => {
     axios.get('/cart')
-    .then(res => setData(res.data))
-    .catch(err => console.error(err));
+      .then(res => setData(res.data))
+      .catch(err => console.error(err));
   }
 
-  return { initialize, products, data, setData, clearCart };
+  return { fetchCart, products, data, setData, clear };
 })

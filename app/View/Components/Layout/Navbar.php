@@ -6,30 +6,28 @@ use Illuminate\View\Component;
 
 class Navbar extends Component
 {
-  // todo: change list from admin page
-  public array $navbarItems = [];
+    public array $navbarItems = [];
 
-  /**
-   * Create a new component instance.
-   *
-   * @return void
-   */
-  public function __construct()
-  {
-    $this->navbarItems = [
-      ['label' => 'Каталог', 'href' => '/catalog'],
-      ['label' => 'Выписки', 'href' => '/statements'],
-      // ['label' => 'Other projects', 'href' => '/other'],
-    ];
-  }
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->navbarItems = [
+            ['label' => 'Каталог', 'href' => '/catalog'],
+            // ['label' => 'Other projects', 'href' => '/other'],
+        ];
+    }
 
-  /**
-   * Get the view / contents that represent the component.
-   *
-   * @return \Illuminate\Contracts\View\View|\Closure|string
-   */
-  public function render()
-  {
-    return view('layout.navbar');
-  }
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\Contracts\View\View|\Closure|string
+     */
+    public function render()
+    {
+        return view('layout.navbar');
+    }
 }

@@ -67,6 +67,8 @@ const resetFilters = () => {
   filterRefs.value.forEach((filter) => {
     filter.reset();
   });
+
+  getProducts();
 };
 
 onBeforeMount(() => {
@@ -84,8 +86,8 @@ onBeforeMount(() => {
     />
 
     <div class="filter__buttons">
-      <MainButton type="primary" @click="getProducts">Применить</MainButton>
-      <MainButton type="secondary" @click="resetFilters">Сбросить</MainButton>
+      <MainButton button-type="primary" @click="getProducts">Применить</MainButton>
+      <MainButton button-type="secondary" @click="resetFilters">Сбросить</MainButton>
     </div>
   </div>
 </template>

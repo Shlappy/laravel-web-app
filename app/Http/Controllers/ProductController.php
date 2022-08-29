@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Product\ProductCollection;
-use App\Http\Services\Filters\FilterService;
 use App\Models\Category;
 use App\Models\Filters\Filter;
 use App\Models\Product;
@@ -47,9 +46,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function applyFilters(Request $request, Category $category)
-    { 
-        $products = Product::canFilter($request->filters)->paginate(12);
-        
+    {
+        $products = Product::canFilter($request->filters)
+            ->where('category_id', $category->id)
+            ->paginate(12);
+
         return new ProductCollection($products);
     }
 }

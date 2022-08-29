@@ -6,22 +6,11 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 
-use App\Http\Controllers\Business\StatementController;
-use App\Http\Controllers\Business\TagController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
-
-Route::get('/statements', [StatementController::class, 'index'])->name('statements');
-Route::get('/statements/tag/{tag:id}', [StatementController::class, 'filter']);
 
 Route::get('/', function () {
     return view('pages.index');
@@ -44,15 +33,5 @@ Route::controller(CartController::class)->name('cart.')->group(function () {
 });
 
 Route::get('user/{user:id}', [UserController::class, 'show'])->name('account');
-
-// Admin routes
-// Route::prefix('admin')->group(function () {
-//   Route::controller(CategoryController::class)->group(function () {
-//     Route::get('/', 'show')->name('category.show');
-//     Route::post('/', 'store')->name('category.create');
-//   });
-
-//   Route::post('/products/{product}', 'ProductController@create')->name('product.create');
-// });
 
 require __DIR__ . '/auth.php';
