@@ -2,8 +2,11 @@
 import ProductList from "@/components/Product/ProductList.vue";
 import FilterList from "@/components/Filters/FilterList.vue";
 import axios from "axios";
-import { ref } from "vue";
+import { ref, watch  } from "vue";
 import { computed } from "@vue/reactivity";
+import { useCartStore } from "@/components/stores/cartStore.js";
+
+const cart = useCartStore();
 
 const props = defineProps({
   category: Object,
@@ -41,6 +44,27 @@ async function ajaxCall(url, post = false, body = {}) {
     .then((res) => products.value = res.data)
     .catch((err) => console.error(err));
 }
+
+// Remove inCart property from product list
+watch(() => cart.data, (newCart, oldCart) => {
+    if (!newCart.list || !oldCart.list) return;
+
+    let newList = Object.keys(newCart.list);
+    let oldList = Object.keys(oldCart.list);
+
+    if (newList.length >= oldList.length) return;
+
+    let difference = oldList.filter((x) => !newList.includes(x));
+
+    products.value.list.forEach((product) => {
+      if (difference.includes(product.id)) {
+        product.inCart = false;
+      }
+    });
+
+    // может через $refs?
+  }
+)
 
 getProducts();
 </script>

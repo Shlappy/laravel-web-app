@@ -18,6 +18,7 @@ const inCart = ref(props.product.inCart),
 
 watch(() => props.product, (product) => {
   inCart.value = product.inCart;
+  console.log(product)
 })
 
 const addOrRemove = () => {

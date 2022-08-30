@@ -1,8 +1,5 @@
 <script setup>
 import MainButton from '../UI/MainButton.vue';
-// import { useCartStore } from "@/components/stores/cartStore.js";
-
-// const cart = useCartStore();
 
 const props = defineProps({
   product: Object,

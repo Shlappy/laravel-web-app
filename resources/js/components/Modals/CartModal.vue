@@ -14,7 +14,7 @@ const cart = useCartStore();
           <span>Товары: &nbsp;</span>
           <span v-text="cart.data.count"></span>
         </div>
-        <MainButton class="cart-modal__clear" @click="cart.clear">Очистить корзину</MainButton>
+        <MainButton v-if="cart.data.count" class="cart-modal__clear" @click="cart.clear">Очистить корзину</MainButton>
       </div>
       <div class="cart-modal__middle">
         <CartList></CartList>
