@@ -1,6 +1,7 @@
 <script setup>
-import MainButton from "../UI/MainButton.vue";
+import MainButton from "@/components//UI/MainButton.vue";
 import { useCartStore } from "@/components/stores/cartStore.js";
+import Spinner from "@/components/UI/Spinner.vue";
 
 const cart = useCartStore();
 
@@ -16,6 +17,10 @@ const removeItem = () => {
     <div class="cart-items__image"></div>
 
     <div class="cart-items__name" v-text="product.name"></div>
+
+    <div class="cart-items__spinner">
+      <Spinner />
+    </div>
 
     <div class="cart-items__price">
       <span v-text="product.price"></span>

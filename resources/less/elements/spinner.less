@@ -1,0 +1,70 @@
+.spinner {
+    @root: spinner;
+    width: 91px;
+    height: 44px;
+    position: relative;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: #fff;
+
+    &__button {
+        cursor: pointer;
+        box-shadow: none;
+        color: #afafaf;
+        font-size: 18px;
+        font-weight: 400;
+        overflow: hidden;
+        padding: 0;
+        line-height: 1.5;
+        outline: none;
+        height: 100%;
+        width: 40px;
+        position: absolute;
+        border: none;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            .@{root}__icon {
+                background-color: #f7f7f7;
+            }
+        }
+
+        &-minus {
+            left: 0;
+        }
+        &-plus {
+            right: 0;
+        }
+    }
+
+    &__icon {
+        border-radius: 4px;
+        padding-right: 4px;
+        padding-left: 4px;
+        font-size: 28px;
+        font-weight: 300;
+        line-height: 0.8;
+    }
+
+    &__input {
+        display: inline-block;
+        text-align: center;
+        vertical-align: top;
+        width: 33.33333%;
+        line-height: 33px;
+        -webkit-appearance: none;
+        height: 100%;
+        margin: 0 auto;
+        border: none;
+        background: transparent;
+        color: #4e4e4e;
+        font-size: 16px;
+        outline: none;
+    }
+}
