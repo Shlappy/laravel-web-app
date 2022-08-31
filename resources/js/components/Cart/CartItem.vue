@@ -1,0 +1,33 @@
+<script setup>
+import MainButton from "../UI/MainButton.vue";
+import { useCartStore } from "@/components/stores/cartStore.js";
+
+const cart = useCartStore();
+
+const props = defineProps({ product: Object });
+
+const removeItem = () => {
+  cart.removeItem(props.product.id);
+};
+</script>
+
+<template>
+  <div class="cart-items__product">
+    <div class="cart-items__image"></div>
+
+    <div class="cart-items__name" v-text="product.name"></div>
+
+    <div class="cart-items__price">
+      <span v-text="product.price"></span>
+      <span>&nbsp;₽</span>
+    </div>
+
+    <MainButton
+      class="cart-items__delete"
+      button-type="secondary"
+      @click="removeItem"
+    >
+      X
+    </MainButton>
+  </div>
+</template>

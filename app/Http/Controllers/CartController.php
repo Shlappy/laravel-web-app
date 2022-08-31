@@ -23,10 +23,6 @@ class CartController extends Controller
     {
         $cartItems = Cart::getContent();
 
-        if ($request->ajax() || $request->isJson()) {
-            return $this->cartResponse();
-        }
-
         return view('pages.cart.index', compact('cartItems'));
     }
 
@@ -38,6 +34,11 @@ class CartController extends Controller
 
         session()->flash('success', __('cart.added'));
 
+        return $this->cartResponse();
+    }
+
+    public function list()
+    {
         return $this->cartResponse();
     }
 

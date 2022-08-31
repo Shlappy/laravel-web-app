@@ -21,21 +21,21 @@ export const useCartStore = defineStore('cart', () => {
 
   const clear = () => {
     axios.post('/cart-clear')
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch(err => console.error(err));
-  }
-
-  const removeItem = () => {
-
-  }
-
-  const fetchCart = async () => {
-    axios.get('/cart')
       .then(res => setData(res.data))
       .catch(err => console.error(err));
   }
 
-  return { fetchCart, products, data, setData, clear };
+  const removeItem = (id) => {
+    axios.post('/cart-remove', { id })
+      .then(res => setData(res.data))
+      .catch(err => console.error(err));
+  }
+
+  const fetchCart = async () => {
+    axios.get('/cart-list')
+      .then(res => setData(res.data))
+      .catch(err => console.error(err));
+  }
+
+  return { removeItem, fetchCart, products, data, setData, clear };
 })

@@ -1,7 +1,7 @@
 <script setup>
 import MainButton from "@/components/UI/MainButton.vue";
 import { useCartStore } from "@/components/stores/cartStore.js";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const cart = useCartStore();
 
@@ -15,11 +15,6 @@ const cartLinks = {
 
 const inCart = ref(props.product.inCart),
   disabled = ref(false);
-
-watch(() => props.product, (product) => {
-  inCart.value = product.inCart;
-  console.log(product)
-})
 
 const addOrRemove = () => {
   disabled.value = true;
@@ -43,6 +38,12 @@ const cartAjax = (url) => {
     .catch((err) => console.error(err))
     .finally(() => {disabled.value = false});
 };
+
+const setInCart = (status = false) => {
+  inCart.value = status;
+}
+
+defineExpose({ setInCart });
 </script>
 
 <template>

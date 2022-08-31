@@ -1,5 +1,5 @@
 <script setup>
-import CartList from "@/components/Product/CartList.vue";
+import CartList from "@/components/Cart/CartList.vue";
 import MainButton from "../UI/MainButton.vue";
 import { useCartStore } from "@/components/stores/cartStore.js";
 
@@ -17,7 +17,7 @@ const cart = useCartStore();
         <MainButton v-if="cart.data.count" class="cart-modal__clear" @click="cart.clear">Очистить корзину</MainButton>
       </div>
       <div class="cart-modal__middle">
-        <CartList></CartList>
+        <CartList item-component="ModalCartItem"></CartList>
       </div>
       <div class="cart-modal__bottom"></div>
     </div>

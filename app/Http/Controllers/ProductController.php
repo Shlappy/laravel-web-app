@@ -25,11 +25,12 @@ class ProductController extends Controller
      */
     public function index(Request $request, Category $category)
     {
-        if ($request->ajax() || $request->isJson()) {
-            return new ProductCollection(Product::whereBelongsTo($category)->paginate(12));
-        }
-
         return view('pages.products.category-products', compact(['category']));
+    }
+
+    public function list(Category $category)
+    {
+        return new ProductCollection(Product::whereBelongsTo($category)->paginate(12));
     }
 
     /**

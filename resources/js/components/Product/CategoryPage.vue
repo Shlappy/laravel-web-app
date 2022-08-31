@@ -2,11 +2,9 @@
 import ProductList from "@/components/Product/ProductList.vue";
 import FilterList from "@/components/Filters/FilterList.vue";
 import axios from "axios";
-import { ref, watch  } from "vue";
+import { ref  } from "vue";
 import { computed } from "@vue/reactivity";
-import { useCartStore } from "@/components/stores/cartStore.js";
 
-const cart = useCartStore();
 
 const props = defineProps({
   category: Object,
@@ -17,12 +15,12 @@ const products = ref({}),
   pagination = computed(() => products.value.meta);
 
 const getProducts = () => {
-  ajaxCall(`/products/${props.category.slug}`);
+  ajaxCall(`/products/list/${props.category.slug}`);
 };
 
 const applyFilters = (data) => {
-  if (data.length) ajaxCall(`/products/${props.category.slug}`, true, {'filters': data});
-  else ajaxCall(`/products/${props.category.slug}`);
+  if (data.length) ajaxCall(`/products/list/${props.category.slug}`, true, {'filters': data});
+  else ajaxCall(`/products/list/${props.category.slug}`);
 }
 
 const changePage = async (page) => {
@@ -44,27 +42,6 @@ async function ajaxCall(url, post = false, body = {}) {
     .then((res) => products.value = res.data)
     .catch((err) => console.error(err));
 }
-
-// Remove inCart property from product list
-watch(() => cart.data, (newCart, oldCart) => {
-    if (!newCart.list || !oldCart.list) return;
-
-    let newList = Object.keys(newCart.list);
-    let oldList = Object.keys(oldCart.list);
-
-    if (newList.length >= oldList.length) return;
-
-    let difference = oldList.filter((x) => !newList.includes(x));
-
-    products.value.list.forEach((product) => {
-      if (difference.includes(product.id)) {
-        product.inCart = false;
-      }
-    });
-
-    // может через $refs?
-  }
-)
 
 getProducts();
 </script>
