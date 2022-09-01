@@ -312,7 +312,7 @@ class Cart
             [
                 'quantity' => [
                     'relative' => false,
-                    'value' => 1
+                    'value' => $request->quantity
                 ],
             ]
         );

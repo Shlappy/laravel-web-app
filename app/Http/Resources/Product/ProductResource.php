@@ -15,6 +15,13 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $inCart = Cart::has($this->id);
+
+        if ($inCart) {
+            $cart = Cart::get($this->id);
+            $cart = array_merge($cart->toArray(), ['totalPrice' => format_price($cart->quantity * $cart->price)]);
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -23,7 +30,8 @@ class ProductResource extends JsonResource
             'symbol' => __('app.money_symbol'),
             'images' => $this->images,
             'slug' => $this->slug,
-            'inCart' => $this->when(Cart::has($this->id), true)
+            'cart' => $this->when($inCart, $cart),
+            'inCart' => $this->when($inCart, true),
         ];
     }
 }

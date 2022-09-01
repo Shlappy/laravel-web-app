@@ -80,7 +80,7 @@ class CartController extends Controller
             'count' => Cart::getTotalQuantity(),
             'total' => format_price(Cart::getTotal()),
             'symbol' => __('app.money_symbol'),
-            'list' => new ProductCollection(Cart::getContent()),
+            'list' => new ProductCollection(Cart::getContent()->sortBy('name')),
         ]);
     }
 }

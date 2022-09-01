@@ -19,23 +19,36 @@ export const useCartStore = defineStore('cart', () => {
     cartStoreData.value = inputData;
   }
 
+  const ajaxProcessing = ref(false);
+
+  const update = (id, quantity) => {
+    ajaxCall('/update-cart', true, { id, quantity });
+  }
+
   const clear = () => {
-    axios.post('/cart-clear')
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
+    ajaxCall('/cart-clear', true);
   }
 
   const removeItem = (id) => {
-    axios.post('/cart-remove', { id })
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
+    ajaxCall('/cart-remove', true, { id });
   }
 
   const fetchCart = async () => {
-    axios.get('/cart-list')
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
+    ajaxCall('/cart-list');
   }
 
-  return { removeItem, fetchCart, products, data, setData, clear };
+  async function ajaxCall(url, post = false, body = {}) {
+    let res;
+    ajaxProcessing.value = true;
+
+    if (post) res = axios.post(url, body);
+    else res = axios.get(url);
+
+    return res
+      .then(res => setData(res.data))
+      .catch(err => console.error(err))
+      .finally(() => ajaxProcessing.value = false);
+  }
+
+  return { update, removeItem, fetchCart, products, data, setData, clear };
 })

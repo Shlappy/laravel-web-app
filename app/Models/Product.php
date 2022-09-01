@@ -8,6 +8,7 @@ use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Filters\FilterOption;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Product extends Model
 {
@@ -22,6 +23,18 @@ class Product extends Model
         'is_popular',
         'category_id',
     ];
+
+    /**
+     * Convert price from integer to float
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => convert_price($value),
+        );
+    }
 
     public function sluggable(): array
     {

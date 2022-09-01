@@ -10,6 +10,22 @@ const props = defineProps({ product: Object });
 const removeItem = () => {
   cart.removeItem(props.product.id);
 };
+
+const addOne = (count) => {
+  if (props.product.cart.quantity >= 99) return;
+  cart.update(props.product.id, count);
+};
+
+const updateCart = (count) => {
+  if (count >= 99) cart.update(props.product.id, 99);
+  else if (count <= 1) cart.update(props.product.id, 1);
+  else cart.update(props.product.id, count);
+}
+
+const removeOne = (count) => {
+  if (props.product.cart.quantity <= 1) return;
+  cart.update(props.product.id, count);
+};
 </script>
 
 <template>
@@ -19,11 +35,16 @@ const removeItem = () => {
     <div class="cart-items__name" v-text="product.name"></div>
 
     <div class="cart-items__spinner">
-      <Spinner />
+      <Spinner
+        :count="product.cart.quantity"
+        @inputChange="updateCart"
+        @increment="addOne"
+        @decrement="removeOne"
+      />
     </div>
 
-    <div class="cart-items__price">
-      <span v-text="product.price"></span>
+    <div class="cart-items__total-price">
+      <span v-text="product.cart.totalPrice"></span>
       <span>&nbsp;₽</span>
     </div>
 
