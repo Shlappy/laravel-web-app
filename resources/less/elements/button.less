@@ -5,7 +5,31 @@
   border: none;
   background-color: white;
   user-select: none;
+  padding: 10px 20px;
   z-index: 10;
+  box-shadow: 1px 1px 10px transparent;
+  transition: 0.25s;
+
+  &__primary {
+    border-radius: 100px;
+    background-color: @color-main;
+    color: white;
+    
+    &:hover {
+      box-shadow: 1px 0px 13px 0px rgba(255, 82, 82, 0.589);
+      background-color: lighten(@color-main, 4%)
+    }
+  }
+
+  &--white {
+    color: black;
+    background-color: #FFF;
+
+    &.disabled {
+      opacity: 1;
+      color: rgb(184, 184, 184);
+    }
+  }
 
   &-disabled {
     pointer-events: none;

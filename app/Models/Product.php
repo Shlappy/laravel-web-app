@@ -36,6 +36,18 @@ class Product extends Model
         );
     }
 
+    /**
+     * Convert images from json to an array
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function images(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => json_decode($value),
+        );
+    }
+
     public function sluggable(): array
     {
         return [

@@ -4,4 +4,51 @@
     border-right: 2px solid @border-color;
     border-left: 2px solid @border-color;
   }
+
+  &__title-wrapper {
+    position: relative;
+    padding: 15px 50px;
+    border: 2px solid @border-color;
+  }
+
+  &__reset {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &__square-button {
+    display: inline-block;
+    border-left: 2px solid @border-color;
+    padding: 26px;
+  }
+
+  &__view-type {
+    &:nth-of-type(1) {
+      border-left: none;
+    }
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    flex-grow: 1;
+
+    &-tab {
+      display: flex;
+      align-items: center;
+      padding: 15px 50px;
+      border: 2px solid @border-color;
+      border-left: none;
+
+      &-title {
+        font-weight: 600;
+      }
+
+      &.no-padding {
+        padding: 0;
+      }
+    }
+  }
 }

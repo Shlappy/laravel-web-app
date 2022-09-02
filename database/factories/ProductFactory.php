@@ -27,7 +27,7 @@ class ProductFactory extends Factory
       'old_price' => $oldPrice,
       'stock' => rand(0, 50000),
       'description' => $this->faker->realText(),
-      // 'images' => json_encode($this->randomImages()),
+      'images' => json_encode($this->randomImages()),
       'category_id' => \App\Models\Category::inRandomOrder()->first()->id
     ];
   }
@@ -40,10 +40,10 @@ class ProductFactory extends Factory
   /**
    * @return array Array of images
    */
-  public function randomImages()
+  public function randomImages(): array
   {
     $images = [];
-    $count = rand(0, 0);
+    $count = rand(0, 3);
     for ($i = 0; $i <= $count; $i++) {
       $images[] = $this->faker->image(storage_path('app/public/images/products'), 200, 200, false);
     }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Product\CartSessionCollection;
 use App\Http\Resources\Product\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\Cart\CartSession;
 use Cart;
 
 class CartController extends Controller
@@ -30,7 +32,7 @@ class CartController extends Controller
     {
         if (Cart::has($request->id)) return $this->update($request);
 
-        Cart::addFromRequest($request);
+        CartSession::addFromRequest($request);
 
         session()->flash('success', __('cart.added'));
 
@@ -44,7 +46,7 @@ class CartController extends Controller
 
     public function update(Request $request)
     {
-        Cart::updateFromRequest($request);
+        CartSession::updateFromRequest($request);
 
         session()->flash('success', __('cart.added'));
 
@@ -80,7 +82,7 @@ class CartController extends Controller
             'count' => Cart::getTotalQuantity(),
             'total' => format_price(Cart::getTotal()),
             'symbol' => __('app.money_symbol'),
-            'list' => new ProductCollection(Cart::getContent()->sortBy('name')),
+            'list' => new CartSessionCollection(Cart::getContent()->sortBy('name')),
         ]);
     }
 }

@@ -2,13 +2,14 @@
   @padding: 50px;
   border-bottom: 2px solid @border-color;
 
+  .pd:not(.filter-item__list-item) {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
   .pd {
     padding-left: @padding;
     padding-right: @padding;
-  }
-
-  &__wrapper {
-    padding: 15px 0;
   }
 
   &__inner {
@@ -40,25 +41,18 @@
       content: '';
       position: absolute;
       left: 1.2em;
-      top: 5px;
+      top: 1.2em;
       width: 16px;
       height: 13px;
       background: no-repeat center/contain url("@{images}down-arrow.svg");
     }
 
     &.active {
-      margin-bottom: 0.8em;
-    }
-
-    &--between {
-      &.active {
-        margin-bottom: 1em;
-      }
+      margin-bottom: 0.2em;
     }
   }
 
   &__list {
-
     &-item {
       cursor: pointer;
       display: block;

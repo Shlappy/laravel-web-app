@@ -1,0 +1,38 @@
+.cart-items {
+  width: 65%;
+
+  &__product {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 1px 1px 13px #00000007;
+    transition: 0.3s;
+
+    &:hover {
+      box-shadow: 1px 1px 18px #00000012;
+    }
+  }
+
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 145px 1fr 0.4fr 0.6fr 0.3fr;
+    align-items: center;
+  }
+
+  &__spinner {
+    margin: auto;
+  }
+
+  &__total-price {
+    margin: auto;
+  }
+
+  &__image {
+    max-width: 120px;
+    max-height: 120px;
+
+    img {
+      image-rendering: -webkit-optimize-contrast;
+    }
+  }
+}

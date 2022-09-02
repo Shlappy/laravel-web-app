@@ -4,6 +4,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  isDisabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["increment", "decrement", "inputChange"]);
@@ -19,9 +23,10 @@ function isNumber(event) {
 </script>
 
 <template>
-  <div class="spinner">
+  <div class="spinner" :class="{ disabled: isDisabled }">
     <button
       @click="$emit('decrement', count - 1)"
+      :disabled="isDisabled"
       class="spinner__button spinner__button-minus"
     >
       <i class="spinner__icon">−</i>
@@ -30,6 +35,7 @@ function isNumber(event) {
     <input
       @input="$emit('inputChange', count)"
       @keypress="isNumber($event)"
+      :disabled="isDisabled"
       type="text"
       v-model="count"
       onpaste="return false;"
@@ -38,6 +44,7 @@ function isNumber(event) {
 
     <button
       @click="$emit('increment', count + 1)"
+      :disabled="isDisabled"
       class="spinner__button spinner__button-plus"
     >
       <i class="spinner__icon">+</i>

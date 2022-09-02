@@ -87,7 +87,7 @@ onBeforeMount(() => {
 
     <div class="filter__buttons">
       <MainButton button-type="primary" @click="getProducts">Применить</MainButton>
-      <MainButton button-type="secondary" @click="resetFilters">Сбросить</MainButton>
+      <MainButton button-type="primary" @click="resetFilters">Сбросить</MainButton>
     </div>
   </div>
 </template>

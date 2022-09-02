@@ -7,7 +7,6 @@ use Darryldecode\Cart\Exceptions\InvalidItemException;
 use Darryldecode\Cart\Helpers\Helpers;
 use Darryldecode\Cart\Validators\CartItemValidator;
 use Darryldecode\Cart\Exceptions\UnknownModelException;
-use Illuminate\Http\Request;
 
 /**
  * Class Cart
@@ -224,27 +223,6 @@ class Cart
         return $this;
     }
 
-    // OVERRIDE
-    /**
-     * extract data from request and add to cart
-     */
-    public function addFromRequest(Request $request)
-    {
-        $product = \App\Models\Product::findOrFail($request->id);
-
-        $this->add([
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => 1,
-            'attributes' => [
-                'image' => $product->image,
-            ],
-            'associatedModel' => 'Product'
-        ]);
-    }
-    // END OVERRIDE
-
     /**
      * update a cart
      *
@@ -300,24 +278,6 @@ class Cart
         $this->fireEvent('updated', $item);
         return true;
     }
-
-    // OVERRIDE
-    /**
-     * extract data from request and update cart
-     */
-    public function updateFromRequest(Request $request)
-    {
-        $this->update(
-            $request->id,
-            [
-                'quantity' => [
-                    'relative' => false,
-                    'value' => $request->quantity
-                ],
-            ]
-        );
-    }
-    // END OVERRIDE
 
     /**
      * add condition on an existing item on the cart

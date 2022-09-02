@@ -21,7 +21,7 @@ Route::get('catalog', [CategoryController::class, 'index'])->name('catalog');
 Route::controller(ProductController::class)->group(function () {
     Route::get('products/{category:slug}', 'index')->name('products');
     Route::get('products/list/{category:slug}', 'list')->name('products.list');
-    Route::post('products/{category:slug}', 'applyFilters');
+    Route::post('products/list/{category:slug}', 'applyFilters');
     Route::get('product/{product:slug}', 'show')->name('products.show');
 });
 

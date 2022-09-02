@@ -2,6 +2,7 @@
 import MainButton from "@/components//UI/MainButton.vue";
 import { useCartStore } from "@/components/stores/cartStore.js";
 import Spinner from "@/components/UI/Spinner.vue";
+import TrashCan from "../Assets/Icons/TrashCan.vue";
 
 const cart = useCartStore();
 
@@ -20,7 +21,7 @@ const updateCart = (count) => {
   if (count >= 99) cart.update(props.product.id, 99);
   else if (count <= 1) cart.update(props.product.id, 1);
   else cart.update(props.product.id, count);
-}
+};
 
 const removeOne = (count) => {
   if (props.product.cart.quantity <= 1) return;
@@ -30,30 +31,41 @@ const removeOne = (count) => {
 
 <template>
   <div class="cart-items__product">
-    <div class="cart-items__image"></div>
+    <div class="cart-items__content">
 
-    <div class="cart-items__name" v-text="product.name"></div>
+      <div class="cart-items__wrapper">
+        <div class="cart-items__image">
+          <img
+            :src="'/storage/images/products/' + product.cart.attributes.image"
+          />
+        </div>
 
-    <div class="cart-items__spinner">
-      <Spinner
-        :count="product.cart.quantity"
-        @inputChange="updateCart"
-        @increment="addOne"
-        @decrement="removeOne"
-      />
+        <div class="cart-items__name" v-text="product.name"></div>
+
+        <div class="cart-items__spinner">
+          <Spinner
+            :count="product.cart.quantity"
+            :isDisabled="cart.ajaxProcessing"
+            @inputChange="updateCart"
+            @increment="addOne"
+            @decrement="removeOne"
+          />
+        </div>
+
+        <div class="cart-items__total-price">
+          <span v-text="product.cart.totalPrice"></span>
+          <span>&nbsp;₽</span>
+        </div>
+
+        <MainButton
+          class="cart-items__delete"
+          button-type="secondary"
+          @click="removeItem"
+        >
+          <TrashCan />
+        </MainButton>
+      </div>
+      
     </div>
-
-    <div class="cart-items__total-price">
-      <span v-text="product.cart.totalPrice"></span>
-      <span>&nbsp;₽</span>
-    </div>
-
-    <MainButton
-      class="cart-items__delete"
-      button-type="secondary"
-      @click="removeItem"
-    >
-      X
-    </MainButton>
   </div>
 </template>

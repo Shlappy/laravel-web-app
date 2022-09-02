@@ -50,5 +50,5 @@ export const useCartStore = defineStore('cart', () => {
       .finally(() => ajaxProcessing.value = false);
   }
 
-  return { update, removeItem, fetchCart, products, data, setData, clear };
+  return { update, removeItem, fetchCart, products, data, setData, clear, ajaxProcessing };
 })

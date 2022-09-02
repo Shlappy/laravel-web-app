@@ -30,7 +30,11 @@ class ProductController extends Controller
 
     public function list(Category $category)
     {
-        return new ProductCollection(Product::whereBelongsTo($category)->paginate(12));
+        return new ProductCollection(
+            Product::whereBelongsTo($category)
+                ->with('category')
+                ->paginate(12)
+        );
     }
 
     /**

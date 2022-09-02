@@ -4,20 +4,19 @@ import { ref } from 'vue';
 const props = defineProps({
   buttonType: {
     type: String,
-    default: 'primary',
+    default: '',
     required: false,
     validator(value) {
-      return ['primary', 'secondary', 'round'].includes(value);
+      return ['primary', 'secondary', 'round', ''].includes(value);
     }
   }
 });
 
-const mainClass = ref(`button__${props.buttonType}`);
+const mainClass = props.buttonType ? ref(`button__${props.buttonType}`) : '';
 </script>
 
 <template>
   <button class="button" :class="mainClass">
-  <div :class="buttonType"></div>
     <slot></slot>
   </button>
 </template>

@@ -4,6 +4,7 @@ import FilterList from "@/components/Filters/FilterList.vue";
 import axios from "axios";
 import { ref  } from "vue";
 import { computed } from "@vue/reactivity";
+import MainButton from "../UI/MainButton.vue";
 
 
 const props = defineProps({
@@ -49,9 +50,31 @@ getProducts();
 <template>
   <div class="container container--lg">
     <div class="product__blocks" :data-category="category.id">
-      <FilterList @filterApply="applyFilters" :category="category" class="filter__products" />
+      <div class="product__filters">
+        <div class="filter__title-wrapper">
+          <span class="filter__title">Фильтры</span>
+          <MainButton class="button__reset filter__reset filter__square-button"></MainButton>
+        </div>
+        <FilterList @filterApply="applyFilters" :category="category" class="filter__products" />
+      </div>
 
       <div class="product__catalog-wrapper">
+        <div class="filter__actions">
+          <div class="filter__actions-tab">
+            <span class="filter__actions-tab-title">Сортировать по:&nbsp;</span>
+            <span>Цена (убыв.)</span>
+          </div>  
+          <div class="filter__actions-tab">
+            <span class="filter__actions-tab-title">Показать:&nbsp;</span>
+            <span>12</span>
+          </div>  
+          <div class="filter__actions-tab no-padding">
+            <MainButton class="filter__square-button filter__view-type"></MainButton>
+            <MainButton class="filter__square-button filter__view-type"></MainButton>
+            <span class="filter__actions-tab-title">Сравнить:</span>
+          </div>  
+        </div>
+
         <ProductList :products="products" />
 
         <Pagination
