@@ -88,4 +88,27 @@
       box-shadow: 3px 5px 15px fade(#000, 40%);
     }
   }
+
+  &__reset {
+    padding: 0;
+    width: 56px;
+    height: 52px;
+    background: transparent;
+    border-left: 2px solid @border-color;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: fade(#FFF, 65%);
+
+      path {
+        transition: 0.15s;
+        stroke: #b3b3b3;
+      }
+    }
+
+    &:hover svg path {
+      fill: @color-main;
+    }
+  }
 }

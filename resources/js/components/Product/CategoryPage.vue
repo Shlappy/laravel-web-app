@@ -51,10 +51,6 @@ getProducts();
   <div class="container container--lg">
     <div class="product__blocks" :data-category="category.id">
       <div class="product__filters">
-        <div class="filter__title-wrapper">
-          <span class="filter__title">Фильтры</span>
-          <MainButton class="button__reset filter__reset filter__square-button"></MainButton>
-        </div>
         <FilterList @filterApply="applyFilters" :category="category" class="filter__products" />
       </div>
 

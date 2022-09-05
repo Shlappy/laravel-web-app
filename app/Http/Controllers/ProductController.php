@@ -53,6 +53,7 @@ class ProductController extends Controller
     public function applyFilters(Request $request, Category $category)
     {
         $products = Product::canFilter($request->filters)
+            ->with('category')
             ->where('category_id', $category->id)
             ->paginate(12);
 

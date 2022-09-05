@@ -3,6 +3,7 @@ import MainButton from "../UI/MainButton.vue";
 import FilterItem from "@/components/Filters/FilterItem.vue";
 import axios from "axios";
 import { onBeforeMount, ref } from "vue";
+import ResetIcon from "@/components/Assets/Icons/ResetIcon.vue";
 
 const props = defineProps({
     category: {
@@ -78,6 +79,13 @@ onBeforeMount(() => {
 
 <template>
   <div id="filters" class="filter">
+    <div class="filter__title-wrapper">
+      <span class="filter__title">Фильтры</span>
+        <MainButton @click="resetFilters" class="button__reset filter__reset filter__square-button">
+          <ResetIcon />
+        </MainButton>
+    </div>
+          
     <FilterItem
       v-for="filter in filters"
       :key="filter.id"
@@ -87,7 +95,6 @@ onBeforeMount(() => {
 
     <div class="filter__buttons">
       <MainButton button-type="primary" @click="getProducts">Применить</MainButton>
-      <MainButton button-type="primary" @click="resetFilters">Сбросить</MainButton>
     </div>
   </div>
 </template>
